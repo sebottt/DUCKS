@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Duck ES — Comunidad oficial de Ducks. Descubre nuestras redes, equipo y mucho más." />
+    <meta name="theme-color" content="#395886" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Duck ES | Comunidad Oficial" />
+    <meta property="og:description" content="Duck ES — Comunidad oficial de Ducks. Descubre nuestras redes, equipo y mucho más." />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="./css/styles.css" />
+
+    <title>Duck ES | Comunidad Oficial</title>
+  </head>
+
+  <body>
+
+    <!-- =============================================
+         NAVEGACIÓN LATERAL — Scroll dots
+    ============================================= -->
+    <nav class="nav-dots" aria-label="Navegación por secciones">
+      <ol role="list">
+        <li>
+          <a href="#hero" class="nav-dot nav-dot--active" aria-label="Inicio">
+            <span class="nav-dot__ring" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li>
+          <a href="#redes-ducks" class="nav-dot" aria-label="Redes de Ducks">
+            <span class="nav-dot__ring" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li>
+          <a href="#staff" class="nav-dot" aria-label="Staff de Duck ES">
+            <span class="nav-dot__ring" aria-hidden="true"></span>
+          </a>
+        </li>
+      </ol>
+    </nav>
+
+    <!-- =============================================
+         HEADER — Navbar principal
+    ============================================= -->
+    <header class="site-header" role="banner">
+      <nav class="navbar" aria-label="Navegación principal">
+
+        <a href="#hero" class="navbar__brand" aria-label="Duck ES — Inicio">
+          <span class="navbar__brand-text">Duck <span class="navbar__brand-accent">ES</span></span>
+        </a>
+
+        <button
+          id="menu-toggle"
+          class="navbar__toggle"
+          type="button"
+          aria-controls="primary-nav"
+          aria-expanded="false"
+          aria-label="Abrir menú de navegación"
+        >
+          <span class="hamburger-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+
+        <ul id="primary-nav" class="navbar__menu" role="list">
+          <li class="navbar__item">
+            <a href="#hero" class="navbar__link navbar__link--active">Inicio</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#redes-ducks" class="navbar__link">Redes Ducks</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#redes-duckes" class="navbar__link">Duck ES</a>
+          </li>
+          <li class="navbar__item">
+            <a href="#staff" class="navbar__link">Staff</a>
+          </li>
+        </ul>
+
+      </nav>
+    </header>
+
+    <!-- =============================================
+         MAIN
+    ============================================= -->
+    <main id="main-content">
+
+      <!-- ==========================================
+           LANDING 1 — HERO
+      ========================================== -->
+      <section id="hero" class="section section--hero" aria-labelledby="hero-heading">
+
+        <div class="hero__bg-shapes" aria-hidden="true">
+          <span class="shape shape--1"></span>
+          <span class="shape shape--2"></span>
+          <span class="shape shape--3"></span>
+        </div>
+
+        <div class="hero__content">
+          <!-- Ilustración principal -->
+          <figure class="hero__illustration" aria-label="Ilustración principal de Duck ES">
+            <img
+              src="./assets/ducks-robots.png"
+              alt="Duck robot, mascota oficial de Duck ES"
+              class="hero__illustration-img"
+              width="420"
+              height="480"
+              fetchpriority="high"
+            />
+          </figure>
+
+          <!-- Texto hero -->
+          <div class="hero__text">
+            <h1 id="hero-heading" class="hero__title">
+              <span class="hero__title-brand">Duck ES</span>
+            </h1>
+
+            <blockquote class="hero__blockquote">
+              <p class="hero__quote-line hero__quote-line--intro">Conoce</p>
+              <p class="hero__quote-line hero__quote-line--large">sobre</p>
+              <p class="hero__quote-line hero__quote-line--accent">nosotros</p>
+            </blockquote>
+
+            <p class="hero__roles" aria-label="Lo que somos">
+              <span class="hero__role">Comunidad</span>
+              <span class="hero__role-separator" aria-hidden="true">•</span>
+              <span class="hero__role">Creatividad</span>
+              <span class="hero__role-separator" aria-hidden="true">•</span>
+              <span class="hero__role">Diversión</span>
+            </p>
+
+            <a href="#redes-ducks" class="btn btn--primary hero__cta">
+              <span class="btn__text">Descubrir más</span>
+              <span class="btn__icon-circle" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+
+      </section>
+
+      <!-- ==========================================
+           LANDING 2 — REDES SOCIALES
+           2a) Redes de Ducks (Discord + Web oficial)
+           2b) Redes de Duck ES (TikTok + Instagram)
+      ========================================== -->
+      <section id="redes-ducks" class="section section--redes" aria-labelledby="redes-heading">
+
+        <!-- ——— Bloque A: Redes de Ducks ——— -->
+        <div class="redes-block redes-block--ducks">
+          <header class="section__header" data-animate="fade-up">
+            <p class="section__eyebrow">Comunidad Global</p>
+            <h2 id="redes-heading" class="section__title">Redes de <span class="text--accent">Ducks</span></h2>
+            <p class="section__subtitle">Únete a la comunidad oficial y mantente al día</p>
+          </header>
+
+          <div class="redes__grid redes__grid--ducks" role="list" aria-label="Redes sociales de Ducks">
+
+            <!-- Discord oficial -->
+            <article class="social-card social-card--discord" role="listitem" data-animate="fade-up" data-delay="100">
+              <div class="social-card__icon-wrap" aria-hidden="true">
+                <img
+                  src="./assets/discord-azul.png"
+                  alt=""
+                  class="social-card__icon social-card__icon--img"
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </div>
+              <div class="social-card__body">
+                <h3 class="social-card__name">Discord Oficial</h3>
+                <p class="social-card__desc">Únete al servidor oficial de Ducks. Chat en tiempo real, eventos y mucho más.</p>
+                <a
+                  href="https://discord.gg/ducks"
+                  class="social-card__btn btn btn--discord"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Unirse al Discord oficial de Ducks (abre en nueva pestaña)"
+                >
+                  Unirse al servidor
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Página web oficial -->
+            <article class="social-card social-card--web" role="listitem" data-animate="fade-up" data-delay="200">
+              <div class="social-card__icon-wrap" aria-hidden="true">
+                <!-- SVG Globe / Web -->
+                <svg class="social-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" y1="12" x2="22" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+              </div>
+              <div class="social-card__body">
+                <h3 class="social-card__name">Página Web Oficial</h3>
+                <p class="social-card__desc">Visita el sitio oficial de Ducks con toda la información, noticias y recursos.</p>
+                <a
+                  href="https://www.ducks.gg"
+                  class="social-card__btn btn btn--web"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Visitar la página web oficial de Ducks (abre en nueva pestaña)"
+                >
+                  Visitar sitio web
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- Divisor visual entre bloques -->
+        <div class="redes-divider" aria-hidden="true">
+          <span class="redes-divider__line"></span>
+          <span class="redes-divider__badge">Duck ES</span>
+          <span class="redes-divider__line"></span>
+        </div>
+
+        <!-- ——— Bloque B: Redes de Duck ES ——— -->
+        <div id="redes-duckes" class="redes-block redes-block--duckes">
+          <header class="section__header" data-animate="fade-up">
+            <p class="section__eyebrow">Comunidad Española</p>
+            <h2 id="duckes-heading" class="section__title">Redes de <span class="text--accent">Duck ES</span></h2>
+            <p class="section__subtitle">Síguenos en nuestras redes en español</p>
+          </header>
+
+          <div class="redes__grid redes__grid--duckes" role="list" aria-label="Redes sociales de Duck ES">
+
+            <!-- TikTok -->
+            <article class="social-card social-card--tiktok" role="listitem" data-animate="fade-up" data-delay="100">
+              <div class="social-card__icon-wrap" aria-hidden="true">
+                <!-- SVG TikTok -->
+                <svg class="social-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/>
+                </svg>
+              </div>
+              <div class="social-card__body">
+                <h3 class="social-card__name">TikTok</h3>
+                <p class="social-card__desc">Contenido, clips y momentos divertidos de la comunidad Duck ES en TikTok.</p>
+                <a
+                  href="https://www.tiktok.com/@duckes"
+                  class="social-card__btn btn btn--tiktok"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ver el TikTok de Duck ES (abre en nueva pestaña)"
+                >
+                  Seguir en TikTok
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+            <!-- Instagram -->
+            <article class="social-card social-card--instagram" role="listitem" data-animate="fade-up" data-delay="200">
+              <div class="social-card__icon-wrap" aria-hidden="true">
+                <img
+                  src="./assets/instagram.png"
+                  alt=""
+                  class="social-card__icon social-card__icon--img"
+                  aria-hidden="true"
+                  width="52"
+                  height="52"
+                />
+              </div>
+              <div class="social-card__body">
+                <h3 class="social-card__name">Instagram</h3>
+                <p class="social-card__desc">Fotos, arte, eventos y novedades de Duck ES. ¡Síguenos para no perderte nada!</p>
+                <a
+                  href="https://www.instagram.com/duckes"
+                  class="social-card__btn btn btn--instagram"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Ver el Instagram de Duck ES (abre en nueva pestaña)"
+                >
+                  Seguir en Instagram
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           LANDING 3 — STAFF DE DUCK ES
+      ========================================== -->
+      <section id="staff" class="section section--staff" aria-labelledby="staff-heading">
+
+        <header class="section__header" data-animate="fade-up">
+          <p class="section__eyebrow">Equipo</p>
+          <h2 id="staff-heading" class="section__title">Staff de <span class="text--accent">Duck ES</span></h2>
+          <p class="section__subtitle">Conoce al equipo que hace posible esta comunidad</p>
+        </header>
+
+        <!-- Grid de miembros del staff -->
+        <ul class="staff__grid" role="list" aria-label="Miembros del staff de Duck ES">
+
+          <!-- Miembro 1 -->
+          <li class="staff-card" data-animate="fade-up" data-delay="0">
+            <article class="staff-card__inner">
+              <div class="staff-card__photo-wrap">
+                <img
+                  src="/assets/images/staff/staff-1.png"
+                  alt="Foto de perfil de [Nombre] — Fundador"
+                  class="staff-card__photo"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                />
+              </div>
+              <div class="staff-card__info">
+                <h3 class="staff-card__name">Nombre Staff 1</h3>
+                <p class="staff-card__role">
+                  <span class="role-badge role-badge--founder">Fundador</span>
+                </p>
+              </div>
+            </article>
+          </li>
+
+          <!-- Miembro 2 -->
+          <li class="staff-card" data-animate="fade-up" data-delay="80">
+            <article class="staff-card__inner">
+              <div class="staff-card__photo-wrap">
+                <img
+                  src="/assets/images/staff/staff-2.png"
+                  alt="Foto de perfil de [Nombre] — Co-fundador"
+                  class="staff-card__photo"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                />
+              </div>
+              <div class="staff-card__info">
+                <h3 class="staff-card__name">Nombre Staff 2</h3>
+                <p class="staff-card__role">
+                  <span class="role-badge role-badge--cofoundher">Co-fundador</span>
+                </p>
+              </div>
+            </article>
+          </li>
+
+          <!-- Miembro 3 -->
+          <li class="staff-card" data-animate="fade-up" data-delay="160">
+            <article class="staff-card__inner">
+              <div class="staff-card__photo-wrap">
+                <img
+                  src="/assets/images/staff/staff-3.png"
+                  alt="Foto de perfil de [Nombre] — Administrador"
+                  class="staff-card__photo"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                />
+              </div>
+              <div class="staff-card__info">
+                <h3 class="staff-card__name">Nombre Staff 3</h3>
+                <p class="staff-card__role">
+                  <span class="role-badge role-badge--admin">Administrador</span>
+                </p>
+              </div>
+            </article>
+          </li>
+
+          <!-- Miembro 4 -->
+          <li class="staff-card" data-animate="fade-up" data-delay="240">
+            <article class="staff-card__inner">
+              <div class="staff-card__photo-wrap">
+                <img
+                  src="/assets/images/staff/staff-4.png"
+                  alt="Foto de perfil de [Nombre] — Moderador"
+                  class="staff-card__photo"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                />
+              </div>
+              <div class="staff-card__info">
+                <h3 class="staff-card__name">Nombre Staff 4</h3>
+                <p class="staff-card__role">
+                  <span class="role-badge role-badge--mod">Moderador</span>
+                </p>
+              </div>
+            </article>
+          </li>
+
+          <!-- Miembro 5 -->
+          <li class="staff-card" data-animate="fade-up" data-delay="320">
+            <article class="staff-card__inner">
+              <div class="staff-card__photo-wrap">
+                <img
+                  src="/assets/images/staff/staff-5.png"
+                  alt="Foto de perfil de [Nombre] — Moderador"
+                  class="staff-card__photo"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                />
+              </div>
+              <div class="staff-card__info">
+                <h3 class="staff-card__name">Nombre Staff 5</h3>
+                <p class="staff-card__role">
+                  <span class="role-badge role-badge--mod">Moderador</span>
+                </p>
+              </div>
+            </article>
+          </li>
+
+          <!-- Miembro 6 -->
+          <li class="staff-card" data-animate="fade-up" data-delay="400">
+            <article class="staff-card__inner">
+              <div class="staff-card__photo-wrap">
+                <img
+                  src="/assets/images/staff/staff-6.png"
+                  alt="Foto de perfil de [Nombre] — Diseñador"
+                  class="staff-card__photo"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                />
+              </div>
+              <div class="staff-card__info">
+                <h3 class="staff-card__name">Nombre Staff 6</h3>
+                <p class="staff-card__role">
+                  <span class="role-badge role-badge--designer">Diseñador</span>
+                </p>
+              </div>
+            </article>
+          </li>
+
+        </ul>
+
+      </section>
+
+    </main>
+
+    <!-- =============================================
+         FOOTER
+    ============================================= -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer__inner">
+
+        <div class="footer__brand">
+          <span class="footer__brand-text">Duck <span class="footer__brand-accent">ES</span></span>
+          <p class="footer__tagline">Comunidad oficial en español</p>
+        </div>
+
+        <nav class="footer__social" aria-label="Redes sociales de Duck ES">
+          <ul role="list" class="footer__social-list">
+            <li>
+              <a href="https://discord.gg/ducks" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Discord oficial de Ducks">Discord</a>
+            </li>
+            <li>
+              <a href="https://www.ducks.gg" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Página web oficial de Ducks">Web Oficial</a>
+            </li>
+            <li>
+              <a href="https://www.tiktok.com/@duckes" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Duck ES">TikTok</a>
+            </li>
+            <li>
+              <a href="https://www.instagram.com/duckes" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Duck ES">Instagram</a>
+            </li>
+          </ul>
+        </nav>
+
+        <p class="footer__copyright">
+          <small>&copy; <time datetime="2026">2026</time> Duck ES. Todos los derechos reservados.</small>
+        </p>
+
+      </div>
+    </footer>
+
+    <!-- =============================================
+         SCRIPTS
+    ============================================= -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="./js/main.js" defer></script>
+  </body>
+</html>
