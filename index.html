@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Duck ES — Comunidad oficial de Ducks. Descubre nuestras redes, equipo y mucho más." />
+    <meta name="description" content="Ducks ES — Comunidad oficial de Ducks. Descubre nuestras redes, equipo y mucho más." />
     <meta name="theme-color" content="#395886" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Duck ES | Comunidad Oficial" />
-    <meta property="og:description" content="Duck ES — Comunidad oficial de Ducks. Descubre nuestras redes, equipo y mucho más." />
+    <meta property="og:title" content="Ducks ES | Comunidad Oficial" />
+    <meta property="og:description" content="Ducks ES — Comunidad oficial de Ducks. Descubre nuestras redes, equipo y mucho más." />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,33 +22,12 @@
     <!-- Estilos -->
     <link rel="stylesheet" href="./css/styles.css" />
 
-    <title>Duck ES | Comunidad Oficial</title>
+    <title>Ducks ES | Comunidad Oficial</title>
   </head>
 
   <body>
 
-    <!-- =============================================
-         NAVEGACIÓN LATERAL — Scroll dots
-    ============================================= -->
-    <nav class="nav-dots" aria-label="Navegación por secciones">
-      <ol role="list">
-        <li>
-          <a href="#hero" class="nav-dot nav-dot--active" aria-label="Inicio">
-            <span class="nav-dot__ring" aria-hidden="true"></span>
-          </a>
-        </li>
-        <li>
-          <a href="#redes-ducks" class="nav-dot" aria-label="Redes de Ducks">
-            <span class="nav-dot__ring" aria-hidden="true"></span>
-          </a>
-        </li>
-        <li>
-          <a href="#staff" class="nav-dot" aria-label="Staff de Duck ES">
-            <span class="nav-dot__ring" aria-hidden="true"></span>
-          </a>
-        </li>
-      </ol>
-    </nav>
+
 
     <!-- =============================================
          HEADER — Navbar principal
@@ -56,8 +35,9 @@
     <header class="site-header" role="banner">
       <nav class="navbar" aria-label="Navegación principal">
 
-        <a href="#hero" class="navbar__brand" aria-label="Duck ES — Inicio">
-          <span class="navbar__brand-text">Duck <span class="navbar__brand-accent">ES</span></span>
+        <a href="#hero" class="navbar__brand" aria-label="Ducks ES — Inicio">
+          <img src="assets/duck-logo.png" alt="Ducks ES logo" class="navbar__brand-logo">
+          <span class="navbar__brand-text">Ducks <span class="navbar__brand-accent">ES</span></span>
         </a>
 
         <button
@@ -83,7 +63,7 @@
             <a href="#redes-ducks" class="navbar__link">Redes Ducks</a>
           </li>
           <li class="navbar__item">
-            <a href="#redes-duckes" class="navbar__link">Duck ES</a>
+            <a href="#redes-duckes" class="navbar__link">Ducks ES</a>
           </li>
           <li class="navbar__item">
             <a href="#staff" class="navbar__link">Staff</a>
@@ -111,10 +91,10 @@
 
         <div class="hero__content">
           <!-- Ilustración principal -->
-          <figure class="hero__illustration" aria-label="Ilustración principal de Duck ES">
+          <figure class="hero__illustration" aria-label="Ilustración principal de Ducks ES">
             <img
               src="./assets/ducks-robots.png"
-              alt="Duck robot, mascota oficial de Duck ES"
+              alt="Duck robot, mascota oficial de Ducks ES"
               class="hero__illustration-img"
               width="420"
               height="480"
@@ -125,7 +105,7 @@
           <!-- Texto hero -->
           <div class="hero__text">
             <h1 id="hero-heading" class="hero__title">
-              <span class="hero__title-brand">Duck ES</span>
+              <span class="hero__title-brand">Duck <span class="hero__title-accent">ES</span></span>
             </h1>
 
             <blockquote class="hero__blockquote">
@@ -137,9 +117,9 @@
             <p class="hero__roles" aria-label="Lo que somos">
               <span class="hero__role">Comunidad</span>
               <span class="hero__role-separator" aria-hidden="true">•</span>
-              <span class="hero__role">Creatividad</span>
+              <span class="hero__role">Social</span>
               <span class="hero__role-separator" aria-hidden="true">•</span>
-              <span class="hero__role">Diversión</span>
+              <span class="hero__role">Staff</span>
             </p>
 
             <a href="#redes-ducks" class="btn btn--primary hero__cta">
@@ -160,7 +140,7 @@
       <!-- ==========================================
            LANDING 2 — REDES SOCIALES
            2a) Redes de Ducks (Discord + Web oficial)
-           2b) Redes de Duck ES (TikTok + Instagram)
+           2b) Redes de Ducks ES (TikTok + Instagram)
       ========================================== -->
       <section id="redes-ducks" class="section section--redes" aria-labelledby="redes-heading">
 
@@ -182,24 +162,25 @@
                   alt=""
                   class="social-card__icon social-card__icon--img"
                   aria-hidden="true"
-                  width="52"
-                  height="52"
                 />
               </div>
               <div class="social-card__body">
-                <h3 class="social-card__name">Discord Oficial</h3>
-                <p class="social-card__desc">Únete al servidor oficial de Ducks. Chat en tiempo real, eventos y mucho más.</p>
+                <h3 class="social-card__name">Discord</h3>
+                <p class="social-card__desc">Únete a nuestra comunidad oficial.</p>
                 <a
-                  href="https://discord.gg/ducks"
+                  href="http://discord.gg/amino"
                   class="social-card__btn btn btn--discord"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Unirse al Discord oficial de Ducks (abre en nueva pestaña)"
                 >
                   Unirse al servidor
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <span class="btn__icon-circle" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </span>
                 </a>
               </div>
             </article>
@@ -207,27 +188,25 @@
             <!-- Página web oficial -->
             <article class="social-card social-card--web" role="listitem" data-animate="fade-up" data-delay="200">
               <div class="social-card__icon-wrap" aria-hidden="true">
-                <!-- SVG Globe / Web -->
-                <svg class="social-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="2" y1="12" x2="22" y2="12"/>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                </svg>
+                <img src="assets/duck-logo.png" alt="" class="social-card__icon social-card__icon--img" aria-hidden="true">
               </div>
               <div class="social-card__body">
-                <h3 class="social-card__name">Página Web Oficial</h3>
-                <p class="social-card__desc">Visita el sitio oficial de Ducks con toda la información, noticias y recursos.</p>
+                <h3 class="social-card__name">Página Web</h3>
+                <p class="social-card__desc">Explora todas nuestras novedades.</p>
                 <a
-                  href="https://www.ducks.gg"
+                  href="https://duckapps.com.br/"
                   class="social-card__btn btn btn--web"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visitar la página web oficial de Ducks (abre en nueva pestaña)"
                 >
                   Visitar sitio web
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <span class="btn__icon-circle" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </span>
                 </a>
               </div>
             </article>
@@ -238,42 +217,45 @@
         <!-- Divisor visual entre bloques -->
         <div class="redes-divider" aria-hidden="true">
           <span class="redes-divider__line"></span>
-          <span class="redes-divider__badge">Duck ES</span>
+          <span class="redes-divider__badge">Ducks ES</span>
           <span class="redes-divider__line"></span>
         </div>
 
-        <!-- ——— Bloque B: Redes de Duck ES ——— -->
+        <!-- ——— Bloque B: Redes de Ducks ES ——— -->
         <div id="redes-duckes" class="redes-block redes-block--duckes">
           <header class="section__header" data-animate="fade-up">
             <p class="section__eyebrow">Comunidad Española</p>
-            <h2 id="duckes-heading" class="section__title">Redes de <span class="text--accent">Duck ES</span></h2>
+            <h2 id="duckes-heading" class="section__title">Redes de <span class="text--accent">Ducks ES</span></h2>
             <p class="section__subtitle">Síguenos en nuestras redes en español</p>
           </header>
 
-          <div class="redes__grid redes__grid--duckes" role="list" aria-label="Redes sociales de Duck ES">
+          <div class="redes__grid redes__grid--duckes" role="list" aria-label="Redes sociales de Ducks ES">
 
             <!-- TikTok -->
             <article class="social-card social-card--tiktok" role="listitem" data-animate="fade-up" data-delay="100">
               <div class="social-card__icon-wrap" aria-hidden="true">
                 <!-- SVG TikTok -->
-                <svg class="social-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <svg class="social-card__icon social-card__icon--svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/>
                 </svg>
               </div>
               <div class="social-card__body">
                 <h3 class="social-card__name">TikTok</h3>
-                <p class="social-card__desc">Contenido, clips y momentos divertidos de la comunidad Duck ES en TikTok.</p>
+                <p class="social-card__desc">Los mejores momentos y tendencias.</p>
                 <a
-                  href="https://www.tiktok.com/@duckes"
+                  href="https://vt.tiktok.com/ZSXYb4EBV/"
                   class="social-card__btn btn btn--tiktok"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Ver el TikTok de Duck ES (abre en nueva pestaña)"
+                  aria-label="Ver el TikTok de Ducks ES (abre en nueva pestaña)"
                 >
                   Seguir en TikTok
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <span class="btn__icon-circle" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </span>
                 </a>
               </div>
             </article>
@@ -286,24 +268,25 @@
                   alt=""
                   class="social-card__icon social-card__icon--img"
                   aria-hidden="true"
-                  width="52"
-                  height="52"
                 />
               </div>
               <div class="social-card__body">
                 <h3 class="social-card__name">Instagram</h3>
-                <p class="social-card__desc">Fotos, arte, eventos y novedades de Duck ES. ¡Síguenos para no perderte nada!</p>
+                <p class="social-card__desc">Fotos, stories y detrás de escena.</p>
                 <a
-                  href="https://www.instagram.com/duckes"
+                  href="https://www.instagram.com/ducks.app.esp?igsh=MTBtcjJuaXZvN3g2NQ=="
                   class="social-card__btn btn btn--instagram"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Ver el Instagram de Duck ES (abre en nueva pestaña)"
+                  aria-label="Ver el Instagram de Ducks ES (abre en nueva pestaña)"
                 >
                   Seguir en Instagram
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                    <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <span class="btn__icon-circle" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </span>
                 </a>
               </div>
             </article>
@@ -320,12 +303,12 @@
 
         <header class="section__header" data-animate="fade-up">
           <p class="section__eyebrow">Equipo</p>
-          <h2 id="staff-heading" class="section__title">Staff de <span class="text--accent">Duck ES</span></h2>
+          <h2 id="staff-heading" class="section__title">Staff de <span class="text--accent">Ducks ES</span></h2>
           <p class="section__subtitle">Conoce al equipo que hace posible esta comunidad</p>
         </header>
 
         <!-- Grid de miembros del staff -->
-        <ul class="staff__grid" role="list" aria-label="Miembros del staff de Duck ES">
+        <ul class="staff__grid" role="list" aria-label="Miembros del staff de Ducks ES">
 
           <!-- Miembro 1 -->
           <li class="staff-card" data-animate="fade-up" data-delay="0">
@@ -472,29 +455,35 @@
       <div class="footer__inner">
 
         <div class="footer__brand">
-          <span class="footer__brand-text">Duck <span class="footer__brand-accent">ES</span></span>
+          <span class="footer__brand-text">Ducks <span class="footer__brand-accent">ES</span></span>
           <p class="footer__tagline">Comunidad oficial en español</p>
         </div>
 
-        <nav class="footer__social" aria-label="Redes sociales de Duck ES">
+        <nav class="footer__social" aria-label="Redes sociales de Ducks ES">
           <ul role="list" class="footer__social-list">
             <li>
-              <a href="https://discord.gg/ducks" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Discord oficial de Ducks">Discord</a>
+              <a href="http://discord.gg/amino" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Discord oficial de Ducks">Discord</a>
             </li>
             <li>
-              <a href="https://www.ducks.gg" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Página web oficial de Ducks">Web Oficial</a>
+              <a href="https://duckapps.com.br/" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Página web oficial de Ducks">Web Oficial</a>
             </li>
             <li>
-              <a href="https://www.tiktok.com/@duckes" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Duck ES">TikTok</a>
+              <a href="https://vt.tiktok.com/ZSXYb4EBV/" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="TikTok de Ducks ES">TikTok</a>
             </li>
             <li>
-              <a href="https://www.instagram.com/duckes" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Duck ES">Instagram</a>
+              <a href="https://www.instagram.com/ducks.app.esp?igsh=MTBtcjJuaXZvN3g2NQ==" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Ducks ES">Instagram</a>
             </li>
           </ul>
         </nav>
 
+        <nav class="footer__legal" aria-label="Páginas legales">
+          <a href="./privacidad.html" class="footer__legal-link">Política de Privacidad</a>
+          <span class="footer__legal-sep" aria-hidden="true">·</span>
+          <a href="./terminos.html" class="footer__legal-link">Términos y Condiciones</a>
+        </nav>
+
         <p class="footer__copyright">
-          <small>&copy; <time datetime="2026">2026</time> Duck ES. Todos los derechos reservados.</small>
+          <small>&copy; <time datetime="2026">2026</time> Ducks ES. Todos los derechos reservados.</small>
         </p>
 
       </div>

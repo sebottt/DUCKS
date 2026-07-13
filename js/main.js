@@ -84,37 +84,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
      3. SCROLL DOTS Y NAVBAR LINKS — Sección activa
   ============================================= */
   (function initScrollSpy() {
-    const sections = document.querySelectorAll('.section[id]');
-    const dots     = document.querySelectorAll('.nav-dot');
+    const sectionIds = ['hero', 'redes-ducks', 'redes-duckes', 'staff'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     const navLinks = document.querySelectorAll('.navbar__link');
+
     if (!sections.length) return;
 
-    sections.forEach((section, i) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top center",
-        end: "bottom center",
-        onToggle: self => {
-          if (self.isActive) {
-            // Actualizar dots
-            if (dots.length > 0) {
-              dots.forEach(dot => dot.classList.remove('nav-dot--active'));
-              if(dots[i]) dots[i].classList.add('nav-dot--active');
-            }
-            
-            // Actualizar links del navbar
-            if(navLinks.length > 0) {
-                navLinks.forEach(link => {
-                    const href = link.getAttribute('href');
-                    const id = section.id;
-                    const isActive = href === `#${id}` || (id === 'redes-duckes' && href === '#redes-ducks');
-                    link.classList.toggle('navbar__link--active', isActive);
-                });
-            }
-          }
+    function updateActiveSection() {
+      let currentId = 'hero';
+      const triggerPoint = window.innerHeight * 0.45; // Punto de activación ligeramente arriba del centro
+
+      // Al iterar en orden, las secciones anidadas (hijos) sobrescribirán a sus padres
+      // si también han cruzado el punto de activación.
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top <= triggerPoint) {
+          currentId = sections[i].id;
         }
-      });
-    });
+      }
+
+      const index = sectionIds.indexOf(currentId);
+
+      // Actualizar links del navbar
+      if (navLinks.length > 0) {
+        navLinks.forEach(link => {
+          link.classList.toggle('navbar__link--active', link.getAttribute('href') === `#${currentId}`);
+        });
+      }
+    }
+
+    // Escuchar el evento de scroll de forma óptima
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    // Inicializar estado al cargar
+    updateActiveSection();
   })();
 
   /* =============================================
@@ -218,7 +220,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
              rotation: 5,
              y: -5,
              duration: 0.5,
-             ease: "back.out(1.5)"
+             ease: "back.out(1.5)",
+             overwrite: "auto"
            });
         }
       });
@@ -231,7 +234,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
              rotation: 0,
              y: 0,
              duration: 0.5,
-             ease: "power2.out"
+             ease: "power2.out",
+             overwrite: "auto"
            });
         }
       });
@@ -258,7 +262,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
           rotation: -8,     // Rota a la izquierda
           y: -15,           // Sube un poco
           duration: 0.6,
-          ease: "back.out(1.7)" // Efecto elástico fuerte (rebote)
+          ease: "back.out(1.7)", // Efecto elástico fuerte (rebote)
+          overwrite: "auto"
         });
       });
 
@@ -268,7 +273,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
           rotation: 0,
           y: 0,
           duration: 0.5,
-          ease: "power2.out"
+          ease: "power2.out",
+          overwrite: "auto"
         });
       });
     });
