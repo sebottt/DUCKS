@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="./css/styles.css" />
 
     <title>Ducks ES | Comunidad Oficial</title>
+    <!-- Preload recursos críticos -->
+    <link rel="preload" href="./assets/webp/ducks-robots.webp" as="image" type="image/webp">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" as="style">
   </head>
 
   <body>
@@ -36,7 +39,10 @@
       <nav class="navbar" aria-label="Navegación principal">
 
         <a href="#hero" class="navbar__brand" aria-label="Ducks ES — Inicio">
-          <img src="assets/duck-logo.png" alt="Ducks ES logo" class="navbar__brand-logo">
+          <picture>
+            <source srcset="assets/webp/duck-logo-sm.webp" type="image/webp">
+            <img src="assets/duck-logo.png" alt="Ducks ES logo" class="navbar__brand-logo" width="36" height="36" loading="eager">
+          </picture>
           <span class="navbar__brand-text">Ducks <span class="navbar__brand-accent">ES</span></span>
         </a>
 
@@ -92,14 +98,18 @@
         <div class="hero__content">
           <!-- Ilustración principal -->
           <figure class="hero__illustration" aria-label="Ilustración principal de Ducks ES">
-            <img
-              src="./assets/ducks-robots.png"
-              alt="Duck robot, mascota oficial de Ducks ES"
-              class="hero__illustration-img"
-              width="420"
-              height="480"
-              fetchpriority="high"
-            />
+            <picture>
+              <source srcset="./assets/webp/ducks-robots.webp" type="image/webp">
+              <img
+                src="./assets/ducks-robots.png"
+                alt="Duck robot, mascota oficial de Ducks ES"
+                class="hero__illustration-img"
+                width="420"
+                height="480"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
           </figure>
 
           <!-- Texto hero -->
@@ -157,12 +167,17 @@
             <!-- Discord oficial -->
             <article class="social-card social-card--discord" role="listitem" data-animate="fade-up" data-delay="100">
               <div class="social-card__icon-wrap" aria-hidden="true">
-                <img
-                  src="./assets/discord-azul.png"
-                  alt=""
-                  class="social-card__icon social-card__icon--img"
-                  aria-hidden="true"
-                />
+                <picture>
+                  <source srcset="./assets/webp/discord-azul.webp" type="image/webp">
+                  <img
+                    src="./assets/discord-azul.png"
+                    alt=""
+                    class="social-card__icon social-card__icon--img"
+                    aria-hidden="true"
+                    loading="lazy"
+                    width="200" height="200"
+                  />
+                </picture>
               </div>
               <div class="social-card__body">
                 <h3 class="social-card__name">Discord</h3>
@@ -188,7 +203,10 @@
             <!-- Página web oficial -->
             <article class="social-card social-card--web" role="listitem" data-animate="fade-up" data-delay="200">
               <div class="social-card__icon-wrap" aria-hidden="true">
-                <img src="assets/duck-logo.png" alt="" class="social-card__icon social-card__icon--img" aria-hidden="true">
+                <picture>
+                  <source srcset="assets/webp/duck-logo.webp" type="image/webp">
+                  <img src="assets/duck-logo.png" alt="" class="social-card__icon social-card__icon--img" aria-hidden="true" loading="lazy" width="200" height="200">
+                </picture>
               </div>
               <div class="social-card__body">
                 <h3 class="social-card__name">Página Web</h3>
@@ -263,12 +281,17 @@
             <!-- Instagram -->
             <article class="social-card social-card--instagram" role="listitem" data-animate="fade-up" data-delay="200">
               <div class="social-card__icon-wrap" aria-hidden="true">
-                <img
-                  src="./assets/instagram.png"
-                  alt=""
-                  class="social-card__icon social-card__icon--img"
-                  aria-hidden="true"
-                />
+                <picture>
+                  <source srcset="./assets/webp/instagram.webp" type="image/webp">
+                  <img
+                    src="./assets/instagram.png"
+                    alt=""
+                    class="social-card__icon social-card__icon--img"
+                    aria-hidden="true"
+                    loading="lazy"
+                    width="200" height="200"
+                  />
+                </picture>
               </div>
               <div class="social-card__body">
                 <h3 class="social-card__name">Instagram</h3>
@@ -492,8 +515,25 @@
     <!-- =============================================
          SCRIPTS
     ============================================= -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <!-- GSAP solo se carga cuando el usuario empieza a hacer scroll -->
+    <script>
+      (function() {
+        function loadGSAP() {
+          var s1 = document.createElement('script');
+          s1.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+          s1.onload = function() {
+            var s2 = document.createElement('script');
+            s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+            document.head.appendChild(s2);
+          };
+          document.head.appendChild(s1);
+          window.removeEventListener('scroll', loadGSAP);
+          window.removeEventListener('touchstart', loadGSAP);
+        }
+        window.addEventListener('scroll', loadGSAP, { passive: true, once: true });
+        window.addEventListener('touchstart', loadGSAP, { passive: true, once: true });
+      })();
+    </script>
     <script src="./js/main.js" defer></script>
   </body>
 </html>
