@@ -759,6 +759,7 @@ button {
 .staff-icon {
   width: 24px;
   height: 24px;
+  flex-shrink: 0; 
 }
 
 .staff-group__title--coordinator {
