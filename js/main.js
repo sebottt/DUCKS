@@ -1,20 +1,12 @@
 /* =============================================
-   DUCK ES — main.js
-   Animaciones con GSAP y ScrollTrigger,
-   navbar scroll, menú móvil, scroll dots activos
+   DUCKS ES — main.js
+   Sin GSAP/ScrollTrigger — CSS animations +
+   IntersectionObserver nativo (cero RAF loops)
 ============================================= */
 
 'use strict';
 
-document.addEventListener("DOMContentLoaded", (event) => {
-  // Asegurarnos de que GSAP esté disponible
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-    console.error("GSAP o ScrollTrigger no se cargaron correctamente.");
-    return;
-  }
-
-  // Registrar ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
+document.addEventListener('DOMContentLoaded', () => {
 
   /* =============================================
      1. NAVBAR — Sombra al hacer scroll
@@ -22,17 +14,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
   (function initNavbarScroll() {
     const header = document.querySelector('.site-header');
     if (!header) return;
-
-    const onScroll = () => {
-      if (window.scrollY > 20) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-    };
-
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); 
+    onScroll();
   })();
 
   /* =============================================
@@ -43,239 +27,126 @@ document.addEventListener("DOMContentLoaded", (event) => {
     const menu   = document.getElementById('primary-nav');
     if (!toggle || !menu) return;
 
+    const close = () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+      menu.classList.remove('is-open');
+    };
+
     toggle.addEventListener('click', () => {
       const isOpen = toggle.getAttribute('aria-expanded') === 'true';
-
       toggle.setAttribute('aria-expanded', String(!isOpen));
       toggle.setAttribute('aria-label', isOpen ? 'Abrir menú de navegación' : 'Cerrar menú de navegación');
       menu.classList.toggle('is-open', !isOpen);
     });
 
-    // Cerrar menú al hacer click en un link
-    menu.querySelectorAll('.navbar__link').forEach(link => {
-      link.addEventListener('click', () => {
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
-        menu.classList.remove('is-open');
-      });
-    });
-
-    // Cerrar menú al hacer click fuera
+    menu.querySelectorAll('.navbar__link').forEach(link => link.addEventListener('click', close));
     document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
-        menu.classList.remove('is-open');
-      }
+      if (!menu.contains(e.target) && !toggle.contains(e.target)) close();
     });
-
-    // Cerrar con tecla Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menu.classList.contains('is-open')) {
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
-        menu.classList.remove('is-open');
+        close();
         toggle.focus();
       }
     });
   })();
 
   /* =============================================
-     3. SCROLL DOTS Y NAVBAR LINKS — Sección activa
+     3. SCROLL SPY — Sección activa en navbar
   ============================================= */
   (function initScrollSpy() {
     const sectionIds = ['hero', 'redes-ducks', 'redes-duckes', 'staff'];
-    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-    const navLinks = document.querySelectorAll('.navbar__link');
-
+    const sections   = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    const navLinks   = document.querySelectorAll('.navbar__link');
     if (!sections.length) return;
 
     function updateActiveSection() {
       let currentId = 'hero';
-      const triggerPoint = window.innerHeight * 0.45; // Punto de activación ligeramente arriba del centro
-
-      // Al iterar en orden, las secciones anidadas (hijos) sobrescribirán a sus padres
-      // si también han cruzado el punto de activación.
-      for (let i = 0; i < sections.length; i++) {
-        const rect = sections[i].getBoundingClientRect();
-        if (rect.top <= triggerPoint) {
-          currentId = sections[i].id;
-        }
+      const trigger = window.innerHeight * 0.45;
+      for (const section of sections) {
+        if (section.getBoundingClientRect().top <= trigger) currentId = section.id;
       }
-
-      const index = sectionIds.indexOf(currentId);
-
-      // Actualizar links del navbar
-      if (navLinks.length > 0) {
-        navLinks.forEach(link => {
-          link.classList.toggle('navbar__link--active', link.getAttribute('href') === `#${currentId}`);
-        });
-      }
+      navLinks.forEach(link => {
+        link.classList.toggle('navbar__link--active', link.getAttribute('href') === `#${currentId}`);
+      });
     }
 
-    // Escuchar el evento de scroll de forma óptima
     window.addEventListener('scroll', updateActiveSection, { passive: true });
-    // Inicializar estado al cargar
     updateActiveSection();
   })();
 
   /* =============================================
-     4. ANIMACIONES CON GSAP Y SCROLLTRIGGER
+     4. ANIMACIONES DE ENTRADA — IntersectionObserver
+     Reemplaza GSAP ScrollTrigger (cero RAF loops)
   ============================================= */
-  (function initGSAPAnimations() {
+  (function initAnimations() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
 
-    // --- Hero & Page Load Animation ---
-    const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    
-    // 1. Aparece el Navbar
-    heroTl.fromTo(".site-header",
-      { y: -80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, delay: 0.1 }
-    )
-    // 2. Aparecen los links del menu
-    .fromTo(".navbar__item, .navbar__brand",
-      { y: -20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, stagger: 0.1 },
-      "-=0.4"
-    )
-    // 3. Aparece el contenido del Hero
-    .fromTo(".hero__text > *", 
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, stagger: 0.15 },
-      "-=0.2"
-    )
-    // 4. Entra la imagen (Pato) - Minimalista y elegante
-    .fromTo(".hero__illustration-img",
-      { y: 30, opacity: 0, scale: 0.98 },
-      { y: 0, opacity: 1, scale: 1, duration: 1.5, ease: "power2.out" },
-      "-=0.6"
-    );
-
-    // Animación de flotación continua ELIMINADA por solicitud minimalista
-
-    // --- Animación de las secciones ("Siguiente landpage") ---
-    // Agrega un efecto de entrada en la página cuando pasas a la siguiente sección
-    const sections = document.querySelectorAll('.section:not(.section--hero)');
-    sections.forEach(section => {
-      gsap.fromTo(section,
-        { opacity: 0, y: 100 },
-        {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%", // Inicia cuando la sección entra al 85% de la pantalla
-            end: "top 40%",   // Termina cuando llega al 40%
-            scrub: 1          // Se enlaza de manera suave al scroll (parallax effect)
-          },
-          opacity: 1,
-          y: 0,
-          ease: "none"
-        }
-      );
+    // --- Hero: animación CSS al cargar (sin JS) ---
+    // Las clases .anim-hero-* se añaden aquí para disparar los @keyframes
+    const heroEls = document.querySelectorAll('.site-header, .navbar__brand, .navbar__item, .hero__text > *, .hero__illustration-img');
+    heroEls.forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.08}s`;
+      el.classList.add('anim-hero-in');
     });
 
-    // --- Scroll Animations (Fade Up Elements) ---
-    const fadeUpElements = document.querySelectorAll('[data-animate="fade-up"]');
-    
-    fadeUpElements.forEach(el => {
-      const delay = el.dataset.delay ? parseInt(el.dataset.delay) / 1000 : 0;
-      
-      gsap.fromTo(el, 
-        { y: 80, opacity: 0, scale: 0.95 },
-        {
-          scrollTrigger: {
-            trigger: el,
-            start: "top 95%", // Inicia cuando casi entra en la pantalla
-            toggleActions: "play none none reverse" // Repite la animación al subir y bajar
-          },
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 0.8,
-          ease: "back.out(1.2)",
-          delay: delay
+    if (prefersReduced) return;
+
+    // --- Secciones y tarjetas: IntersectionObserver ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target); // Solo una vez — no bucle
         }
-      );
+      });
+    }, {
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('[data-animate="fade-up"], .section:not(.section--hero)').forEach(el => {
+      observer.observe(el);
     });
   })();
 
   /* =============================================
-     5. STAFF CARDS HOVER — Animación GSAP
+     5. STAFF CARDS HOVER — CSS transform via JS
+     (sin GSAP — solo clases CSS)
   ============================================= */
   (function initStaffCardHover() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
 
-    const cards = document.querySelectorAll('.staff-card__inner');
-
-    cards.forEach(card => {
-      const photoWrap = card.querySelector('.staff-card__photo-wrap');
-      
+    document.querySelectorAll('.staff-card__inner').forEach(card => {
+      const photo = card.querySelector('.staff-card__photo-wrap');
+      if (!photo) return;
       card.addEventListener('mouseenter', () => {
-        // Rotación e incremento en la foto
-        if(photoWrap) {
-           gsap.to(photoWrap, {
-             scale: 1.15,
-             rotation: 5,
-             y: -5,
-             duration: 0.5,
-             ease: "back.out(1.5)",
-             overwrite: "auto"
-           });
-        }
+        photo.style.transform = 'scale(1.15) rotate(5deg) translateY(-5px)';
       });
-
       card.addEventListener('mouseleave', () => {
-        // Restaurar estado inicial
-        if(photoWrap) {
-           gsap.to(photoWrap, {
-             scale: 1,
-             rotation: 0,
-             y: 0,
-             duration: 0.5,
-             ease: "power2.out",
-             overwrite: "auto"
-           });
-        }
+        photo.style.transform = '';
       });
     });
   })();
 
   /* =============================================
-     6. SOCIAL CARDS HOVER — Animación GSAP de íconos/imágenes
+     6. SOCIAL CARDS HOVER — CSS transform via JS
+     (sin GSAP — solo clases CSS)
   ============================================= */
   (function initSocialCardHover() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
 
-    const cards = document.querySelectorAll('.social-card');
-
-    cards.forEach(card => {
+    document.querySelectorAll('.social-card').forEach(card => {
       const icon = card.querySelector('.social-card__icon, .social-card__icon--img');
       if (!icon) return;
-
-      // Al pasar el ratón por el contenedor (la tarjeta completa)
       card.addEventListener('mouseenter', () => {
-        gsap.to(icon, {
-          scale: 1.25,      // Crece 25%
-          rotation: -8,     // Rota a la izquierda
-          y: -15,           // Sube un poco
-          duration: 0.6,
-          ease: "back.out(1.7)", // Efecto elástico fuerte (rebote)
-          overwrite: "auto"
-        });
+        icon.style.transform = 'scale(1.25) rotate(-8deg) translateY(-15px)';
       });
-
       card.addEventListener('mouseleave', () => {
-        gsap.to(icon, {
-          scale: 1,
-          rotation: 0,
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-          overwrite: "auto"
-        });
+        icon.style.transform = '';
       });
     });
   })();
