@@ -74,37 +74,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
   
   (function initScrollSpy() {
-    const sections = document.querySelectorAll('.section[id]');
-    const dots     = document.querySelectorAll('.nav-dot');
+    const sectionIds = ['hero', 'redes-ducks', 'redes-duckes', 'staff'];
+    const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     const navLinks = document.querySelectorAll('.navbar__link');
+
     if (!sections.length) return;
 
-    sections.forEach((section, i) => {
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top center",
-        end: "bottom center",
-        onToggle: self => {
-          if (self.isActive) {
-            
-            if (dots.length > 0) {
-              dots.forEach(dot => dot.classList.remove('nav-dot--active'));
-              if(dots[i]) dots[i].classList.add('nav-dot--active');
-            }
-            
-            
-            if(navLinks.length > 0) {
-                navLinks.forEach(link => {
-                    const href = link.getAttribute('href');
-                    const id = section.id;
-                    const isActive = href === `#${id}` || (id === 'redes-duckes' && href === '#redes-ducks');
-                    link.classList.toggle('navbar__link--active', isActive);
-                });
-            }
-          }
+    function updateActiveSection() {
+      let currentId = 'hero';
+      const triggerPoint = window.innerHeight * 0.45; 
+
+      
+      
+      for (let i = 0; i < sections.length; i++) {
+        const rect = sections[i].getBoundingClientRect();
+        if (rect.top <= triggerPoint) {
+          currentId = sections[i].id;
         }
-      });
-    });
+      }
+
+      const index = sectionIds.indexOf(currentId);
+
+      
+      if (navLinks.length > 0) {
+        navLinks.forEach(link => {
+          link.classList.toggle('navbar__link--active', link.getAttribute('href') === `#${currentId}`);
+        });
+      }
+    }
+
+    
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    
+    updateActiveSection();
   })();
 
   
@@ -204,7 +206,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
              rotation: 5,
              y: -5,
              duration: 0.5,
-             ease: "back.out(1.5)"
+             ease: "back.out(1.5)",
+             overwrite: "auto"
            });
         }
       });
@@ -217,7 +220,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
              rotation: 0,
              y: 0,
              duration: 0.5,
-             ease: "power2.out"
+             ease: "power2.out",
+             overwrite: "auto"
            });
         }
       });
@@ -242,7 +246,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
           rotation: -8,     
           y: -15,           
           duration: 0.6,
-          ease: "back.out(1.7)" 
+          ease: "back.out(1.7)", 
+          overwrite: "auto"
         });
       });
 
@@ -252,7 +257,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
           rotation: 0,
           y: 0,
           duration: 0.5,
-          ease: "power2.out"
+          ease: "power2.out",
+          overwrite: "auto"
         });
       });
     });
