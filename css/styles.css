@@ -255,6 +255,9 @@ button {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   transition: box-shadow var(--transition-med);
+  
+  transform: translateZ(0);
+  will-change: transform, backdrop-filter;
 }
 
 .site-header.scrolled {
@@ -502,9 +505,10 @@ button {
   object-fit: cover;
   object-position: center top;
   border-radius: var(--radius-lg);
-  filter: drop-shadow(0 20px 40px rgba(57, 88, 134, 0.25));
   
-  will-change: transform;
+  filter: drop-shadow(0 20px 40px rgba(57, 88, 134, 0.25));
+  transform: translateZ(0);
+  will-change: transform, filter, opacity;
 }
 
 .hero__text {
