@@ -815,6 +815,7 @@ button {
 .staff-icon {
   width: 24px;
   height: 24px;
+  flex-shrink: 0; /* Evita que el SVG crezca en contenedores flex */
 }
 
 /* Colores por rango */
