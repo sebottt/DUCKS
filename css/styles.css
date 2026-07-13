@@ -280,6 +280,9 @@ button {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   transition: box-shadow var(--transition-med);
+  /* Aceleración por hardware para el efecto de blur (mejora el rendimiento de repintado) */
+  transform: translateZ(0);
+  will-change: transform, backdrop-filter;
 }
 
 .site-header.scrolled {
@@ -541,9 +544,10 @@ button {
   object-fit: cover;
   object-position: center top;
   border-radius: var(--radius-lg);
+  /* Restaurado a drop-shadow para seguir la silueta (transparencia). Acelerado por HW. */
   filter: drop-shadow(0 20px 40px rgba(57, 88, 134, 0.25));
-  /* Animación manejada por GSAP */
-  will-change: transform;
+  transform: translateZ(0);
+  will-change: transform, filter, opacity;
 }
 
 /* @keyframes float eliminado — manejado por GSAP */
