@@ -73,7 +73,8 @@ export default async function handler(req, res) {
       .insert([
         { 
           nomb_usua: cleanUsername, 
-          come_usua: cleanComentario
+          come_usua: cleanComentario,
+          date_regi: new Date().toISOString()
         }
       ]);
 
