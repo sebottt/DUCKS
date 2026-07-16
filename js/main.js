@@ -256,8 +256,8 @@ document.addEventListener('DOMContentLoaded', () => {
           throw new Error(result.error || 'Error al guardar');
         }
       } catch (err) {
-        // Prevent exposing internal errors
-        statusDiv.textContent = 'Hubo un error al conectar con el servidor. Inténtalo más tarde.';
+        // Mostramos el error amigable que nos envía el servidor (ej: duplicados o validación)
+        statusDiv.textContent = err.message || 'Hubo un error al conectar con el servidor.';
         statusDiv.className = 'form-status error';
         btnSubmit.disabled = false;
         btnSubmit.querySelector('.btn__text').textContent = 'Intentar de nuevo';
