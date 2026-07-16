@@ -152,3 +152,115 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
 });
+
+
+
+
+  /* =============================================
+     7. MODAL Y FORMULARIO DE SORTEO
+  ============================================= */
+  (function initModalSorteo() {
+    const btnOpen = document.getElementById('btn-sorteo');
+    const modal = document.getElementById('modal-sorteo');
+    const form = document.getElementById('form-sorteo');
+    const statusDiv = document.getElementById('form-status');
+    const btnSubmit = document.getElementById('btn-submit-sorteo');
+    
+    if (!btnOpen || !modal || !form) return;
+
+    // Función auxiliar para obtener el ancho de la barra de scroll
+    const getScrollbarWidth = () => window.innerWidth - document.documentElement.clientWidth;
+
+    // Abrir Modal
+    btnOpen.addEventListener('click', () => {
+      const scrollbarWidth = getScrollbarWidth();
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      const header = document.querySelector('.site-header');
+      if (header) header.style.paddingRight = `${scrollbarWidth}px`;
+      
+      document.body.style.overflow = 'hidden'; // Prevenir scroll
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      
+      // Enfocar automáticamente el input después de abrirse
+      setTimeout(() => {
+        document.getElementById('nomb_usua').focus();
+      }, 50);
+    });
+
+    // Cerrar Modal
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      const header = document.querySelector('.site-header');
+      if (header) header.style.paddingRight = '';
+      
+      setTimeout(() => {
+        form.reset();
+        statusDiv.textContent = '';
+        statusDiv.className = 'form-status';
+      }, 300);
+    };
+
+    modal.querySelectorAll('[data-close]').forEach(el => {
+      el.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+
+    // Enviar Formulario
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = {
+        nomb_usua: formData.get('nomb_usua').trim(),
+        come_usua: formData.get('come_usua').trim()
+      };
+
+      // Validación extra
+      if (!data.nomb_usua.startsWith('@')) {
+        statusDiv.textContent = 'El nickname debe comenzar con @';
+        statusDiv.className = 'form-status error';
+        return;
+      }
+
+      btnSubmit.disabled = true;
+      btnSubmit.querySelector('.btn__text').textContent = 'Enviando...';
+      statusDiv.textContent = '';
+
+      try {
+        const response = await fetch('/api/guardar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          statusDiv.textContent = '¡Participación registrada con éxito! 🦆';
+          statusDiv.className = 'form-status success';
+          setTimeout(() => {
+            closeModal();
+            btnSubmit.disabled = false;
+            btnSubmit.querySelector('.btn__text').textContent = 'Participar Ahora';
+          }, 2000);
+        } else {
+          throw new Error(result.error || 'Error al guardar');
+        }
+      } catch (err) {
+        // Prevent exposing internal errors
+        statusDiv.textContent = 'Hubo un error al conectar con el servidor. Inténtalo más tarde.';
+        statusDiv.className = 'form-status error';
+        btnSubmit.disabled = false;
+        btnSubmit.querySelector('.btn__text').textContent = 'Intentar de nuevo';
+      }
+    });
+  })();

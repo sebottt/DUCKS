@@ -321,6 +321,55 @@
       </section>
 
       <!-- ==========================================
+           LANDING - SORTEO DUCKS ES
+      ========================================== -->
+      <section id="sorteo" class="section section--sorteo" aria-labelledby="sorteo-heading">
+        <header class="section__header" data-animate="fade-up">
+          <p class="section__eyebrow">🎉 Evento Especial</p>
+          <h2 id="sorteo-heading" class="section__title">Sorteo <span class="text--accent">Ducks Coins</span></h2>
+          <p class="section__subtitle">
+            <strong>Sr. Huevo</strong> regala <strong>300 Ducks Coins</strong> a un usuario de la comunidad Ducks ES. Participa y sé el ganador.
+          </p>
+        </header>
+
+        <div class="sorteo-content" data-animate="fade-up" data-delay="100">
+          <figure class="sorteo-illustration">
+            <picture>
+              <source srcset="./assets/webp/tamagochi.webp" type="image/webp">
+              <img src="./assets/tamagochi.png" alt="Sorteo Ducks Coins Tamagochi" width="400" height="400" decoding="lazy" />
+            </picture>
+          </figure>
+          
+          <div class="sorteo-card">
+            <ul class="sorteo-rules">
+              <li>
+                <span class="sorteo-rules__icon">📝</span>
+                <span>Revisa el blog y asegúrate de cumplir <strong>todos los requisitos</strong> antes de participar.</span>
+              </li>
+              <li>
+                <span class="sorteo-rules__icon">🚨</span>
+                <span>Las participaciones que <strong>no cumplan</strong> los requisitos quedarán automáticamente anuladas.</span>
+              </li>
+              <li class="sorteo-deadline">
+                <span class="sorteo-rules__icon">⏰</span>
+                <span>Fecha límite: <strong>19 de julio de 2026</strong> — ¡No dejes pasar tu oportunidad!</span>
+              </li>
+            </ul>
+
+            <button type="button" id="btn-sorteo" class="btn btn--sorteo">
+              <span class="btn__text">Únete al Sorteo</span>
+              <span class="btn__icon-circle" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
            LANDING 3 — STAFF DE DUCK ES
       ========================================== -->
       <section id="staff" class="section section--staff" aria-labelledby="staff-heading">
@@ -495,8 +544,37 @@
     </footer>
 
     <!-- =============================================
-         SCRIPTS
+         MODAL SORTEO
     ============================================= -->
+    <div id="modal-sorteo" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modal-sorteo-title">
+      <div class="modal__overlay" tabindex="-1" data-close></div>
+      <div class="modal__content">
+        <button type="button" class="modal__close" aria-label="Cerrar modal" data-close>&times;</button>
+        <h2 id="modal-sorteo-title" class="modal__title">🦆 Sorteo Ducks Coins</h2>
+        <p class="modal__desc">Ingresa tu nickname para participar. ¡Suerte!</p>
+        
+        <form id="form-sorteo" class="form-sorteo" autocomplete="off">
+          <div class="form-group">
+            <label for="nomb_usua">Usuario (Nickname)</label>
+            <input type="text" id="nomb_usua" name="nomb_usua" placeholder="@nickname principal" required maxlength="60" pattern="^@.*" title="Debe empezar con @" />
+            <span class="form-error">Debe comenzar con @ y no superar los 60 caracteres.</span>
+          </div>
+          <div class="form-group">
+            <label for="come_usua">Comentario (Opcional)</label>
+            <textarea id="come_usua" name="come_usua" placeholder="¿Qué harías con los Ducks Coins?" maxlength="90" rows="3"></textarea>
+            <span class="form-info">Máximo 90 caracteres.</span>
+          </div>
+          
+          <div id="form-status" class="form-status"></div>
+          
+          <button type="submit" class="btn btn--primary btn--submit" id="btn-submit-sorteo">
+            <span class="btn__text">Participar Ahora</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="./js/main.js" defer></script>
   </body>
 </html>
