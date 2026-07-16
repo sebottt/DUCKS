@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (err) {
         
-        statusDiv.textContent = 'Hubo un error al conectar con el servidor. Inténtalo más tarde.';
+        statusDiv.textContent = err.message || 'Hubo un error al conectar con el servidor.';
         statusDiv.className = 'form-status error';
         btnSubmit.disabled = false;
         btnSubmit.querySelector('.btn__text').textContent = 'Intentar de nuevo';
