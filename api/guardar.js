@@ -43,7 +43,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'El nombre de usuario es obligatorio y debe ser texto válido.' });
   }
 
-  const cleanUsername = username.trim();
+  const cleanUsername = username.trim().toLowerCase();
 
   if (!cleanUsername.startsWith('@')) {
     return res.status(400).json({ error: 'El nombre de usuario debe comenzar con @' });
@@ -76,7 +76,13 @@ export default async function handler(req, res) {
         }
       ]);
 
-    if (error) throw error;
+    if (error) {
+      
+      if (error.code === '23505') {
+        return res.status(400).json({ error: '¡Este nickname ya está participando en el sorteo!' });
+      }
+      throw error;
+    }
 
     return res.status(200).json({ success: true, message: '¡Guardado correctamente!' });
   } catch (error) {
