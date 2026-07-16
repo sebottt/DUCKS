@@ -628,10 +628,55 @@ button {
   font-size: 0.8rem;
 }
 
-/* CTA */
+/* Contenedor de botones del hero (apilados verticalmente) */
+.hero__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch; /* Esto fuerza a ambos botones a tener EXACTAMENTE el mismo ancho */
+  width: fit-content;
+}
+
+/* CTA principal */
 .hero__cta {
   font-size: 1rem;
   padding: 14px 32px;
+  justify-content: center;
+}
+
+/* Botón sorteo hero — Mismo estilo visual que btn--sorteo, pero mismo tamaño/ancho que hero__cta */
+.hero__cta-sorteo {
+  margin-top: 12px;
+  padding: 14px 32px;
+  padding-right: 20px; /* Para acomodar el círculo de la flecha */
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #1a1a1a;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  border: none;
+  box-shadow: 0 4px 18px rgba(245, 158, 11, 0.4);
+  display: inline-flex;
+  justify-content: center;
+}
+
+.hero__cta-sorteo:hover {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.55);
+  transform: translateY(-2px);
+}
+
+.hero__cta-sorteo .btn__icon-circle {
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+}
+
+.hero__cta-sorteo:hover .btn__icon-circle {
+  background-color: #fff;
+  transform: translateX(6px) scale(1.08);
 }
 
 /* =============================================
