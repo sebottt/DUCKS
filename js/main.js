@@ -273,15 +273,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const observer = new IntersectionObserver((entries, observerInstance) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Desconectar inmediatamente para no seguir gastando recursos
+          // Desconectar inmediatamente para ahorrar recursos
           observerInstance.disconnect();
           
-          // Cargar el script de confeti solo si es necesario (Lazy Loading)
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
-          script.onload = () => {
-            // Lanzar confeti más corto y optimizado (1.2 segundos)
-            const duration = 1200;
+          if (typeof confetti === 'function') {
+            const duration = 1500; // Confeti corto y optimizado
             const end = Date.now() + duration;
 
             (function frame() {
@@ -304,11 +300,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 requestAnimationFrame(frame);
               }
             }());
-          };
-          document.body.appendChild(script);
+          }
         }
       });
-    }, { threshold: 0.3 }); // Se dispara cuando el 30% de la sección es visible
+    }, { threshold: 0.1 }); // ¡0.1 arregla el bug! Funciona incluso si la sección es más alta que la pantalla del celular
 
     observer.observe(sorteoSection);
   }
