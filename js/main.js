@@ -252,12 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
           
           observerInstance.disconnect();
           
-          
-          const script = document.createElement('script');
-          script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
-          script.onload = () => {
-            
-            const duration = 1200;
+          if (typeof confetti === 'function') {
+            const duration = 1500; 
             const end = Date.now() + duration;
 
             (function frame() {
@@ -280,11 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 requestAnimationFrame(frame);
               }
             }());
-          };
-          document.body.appendChild(script);
+          }
         }
       });
-    }, { threshold: 0.3 }); 
+    }, { threshold: 0.1 }); 
 
     observer.observe(sorteoSection);
   }
