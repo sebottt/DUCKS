@@ -240,3 +240,51 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   })();
+
+  
+  
+  
+  const sorteoSection = document.getElementById('sorteo');
+  if (sorteoSection) {
+    const observer = new IntersectionObserver((entries, observerInstance) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          
+          observerInstance.disconnect();
+          
+          
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+          script.onload = () => {
+            
+            const duration = 1200;
+            const end = Date.now() + duration;
+
+            (function frame() {
+              confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#fbbf24', '#f59e0b', '#395886', '#638ecb']
+              });
+              confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#fbbf24', '#f59e0b', '#395886', '#638ecb']
+              });
+
+              if (Date.now() < end) {
+                requestAnimationFrame(frame);
+              }
+            }());
+          };
+          document.body.appendChild(script);
+        }
+      });
+    }, { threshold: 0.3 }); 
+
+    observer.observe(sorteoSection);
+  }
