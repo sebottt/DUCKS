@@ -9,6 +9,10 @@ const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 const rateLimit = new Map();
 
 export default async function handler(req, res) {
+  // 🔒 BLOQUEO DE SEGURIDAD TEMPORAL: El sorteo ha finalizado
+  // Esto evita que bots o hackers envíen datos directamente a la API
+  return res.status(403).json({ error: 'El sorteo ha finalizado. No se aceptan más participaciones.' });
+
   // Rate limiting básico basado en IP
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
   const now = Date.now();
