@@ -10,8 +10,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./css/legal.css" />
+    <link rel="stylesheet" href="./css/loader.css" />
+    <noscript><style>#page-loader { display: none; }</style></noscript>
   </head>
   <body>
+
+    <!-- =============================================
+         PANTALLA DE CARGA
+         Se oculta sola al terminar de cargar la pagina
+         (ver js/loader.js). Estilos en css/loader.css.
+    ============================================= -->
+    <div id="page-loader" aria-hidden="true">
+      <div class="page-loader__wrapper">
+        <div class="page-loader__duck-stage">
+          <div class="page-loader__duck">
+            <div class="page-loader__duck-head">
+              <div class="page-loader__duck-eye"></div>
+              <div class="page-loader__duck-beak"></div>
+            </div>
+            <div class="page-loader__duck-body"></div>
+          </div>
+        </div>
+        <div class="page-loader__square"></div>
+      </div>
+    </div>
+    <script src="./js/loader.js"></script>
 
     <!-- NAVBAR -->
     <header class="legal-header">

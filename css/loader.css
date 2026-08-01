@@ -1,0 +1,148 @@
+/* =============================================
+   DUCKS ES — Pantalla de carga inicial
+   ---------------------------------------------
+   Deliberadamente en CSS plano, sin utilidades de Tailwind: se usa
+   igual en index.html (carga css/app.css) y en privacidad.html /
+   terminos.html (cargan css/legal.css). Los colores son los mismos
+   tokens de marca, escritos a mano para no depender de ninguna de
+   las dos hojas de estilo.
+============================================= */
+
+#page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F0F3FA;
+  transition: opacity 0.4s ease;
+}
+
+#page-loader.page-loader--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  /* % para que nunca toque los bordes en pantallas muy angostas,
+     px como tope para que no crezca de mas en pantallas grandes */
+  width: min(90%, 220px);
+}
+
+/* Mismo breakpoint que usa el resto del sitio (640px) para reducir
+   tarjetas en movil. Se escala el conjunto completo (pato + cuadrado)
+   en vez de recalcular cada posicion absoluta a mano: mantiene las
+   proporciones internas intactas sin duplicar logica de posicionamiento. */
+@media (max-width: 640px) {
+  .page-loader__wrapper {
+    transform: scale(0.75);
+  }
+}
+
+/* === Pato === */
+.page-loader__duck-stage {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+}
+
+.page-loader__duck {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  animation: page-loader-swim 1.5s ease-in-out infinite alternate;
+}
+
+.page-loader__duck-head {
+  width: 45px;
+  height: 45px;
+  background-color: #fbbf24;
+  border-radius: 50%;
+  position: relative;
+  left: 35px;
+  z-index: 2;
+}
+
+.page-loader__duck-eye {
+  width: 8px;
+  height: 8px;
+  background-color: #395886;
+  border-radius: 50%;
+  position: absolute;
+  top: 14px;
+  right: 12px;
+}
+
+.page-loader__duck-beak {
+  width: 25px;
+  height: 12px;
+  background-color: #f59e0b;
+  border-radius: 20px;
+  position: absolute;
+  top: 22px;
+  right: -15px;
+}
+
+.page-loader__duck-body {
+  width: 80px;
+  height: 50px;
+  background-color: #fbbf24;
+  border-radius: 50px 50px 20px 20px;
+  position: relative;
+  top: -15px;
+}
+
+@keyframes page-loader-swim {
+  0%   { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(8px) rotate(3deg); }
+}
+
+/* === Loader cuadrado === */
+.page-loader__square {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+}
+
+.page-loader__square::before,
+.page-loader__square::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 0 0 15px 15px;
+  --c: #0000 calc(100% / 3), #395886 0 calc(2 * 100% / 3), #0000 0;
+  --c1: linear-gradient(90deg, var(--c));
+  --c2: linear-gradient(0deg, var(--c));
+  background: var(--c1), var(--c2), var(--c1), var(--c2);
+  background-size: 300% 4px, 4px 300%;
+  background-repeat: no-repeat;
+  animation: page-loader-square 1s infinite linear;
+}
+
+.page-loader__square::after {
+  margin: 15px 15px 0 0;
+  transform: scale(-1, -1);
+}
+
+@keyframes page-loader-square {
+  0%     { background-position: 50% 0, 100% 100%, 0 100%, 0 0; }
+  25%    { background-position: 0 0, 100% 50%, 0 100%, 0 0; }
+  50%    { background-position: 0 0, 100% 0, 50% 100%, 0 0; }
+  75%    { background-position: 0 0, 100% 0, 100% 100%, 0 50%; }
+  75.01% { background-position: 100% 0, 100% 0, 100% 100%, 0 50%; }
+  100%   { background-position: 50% 0, 100% 0, 100% 100%, 0 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__duck,
+  .page-loader__square::before,
+  .page-loader__square::after {
+    animation: none;
+  }
+}
