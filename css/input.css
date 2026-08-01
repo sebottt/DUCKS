@@ -1,0 +1,191 @@
+/* =============================================
+   DUCKS ES — fuente de Tailwind v4 + daisyUI
+   ---------------------------------------------
+   Este es el archivo que se EDITA. El CSS que sirve
+   el sitio se genera con:  npm run build:css
+   (no editar css/app.css a mano: se sobreescribe)
+============================================= */
+
+@import "tailwindcss";
+
+/* Capa de componentes portada del styles.css original.
+   Va en layer(components) a proposito: las utilidades de
+   Tailwind viven en una capa posterior, asi que cualquier
+   clase que pongas en el marcado GANA sobre estas reglas.
+   Eso es lo que permite convertir componente a componente
+   sin pelear con la especificidad. */
+@import "./components.css" layer(components);
+
+/* Archivos donde Tailwind busca clases usadas */
+@source "../*.html";
+@source "../js/**/*.js";
+
+@plugin "daisyui" {
+  themes: false; /* usamos solo el tema propio de abajo */
+}
+
+/* =============================================
+   TOKENS — los mismos valores que tenia styles.css
+   `static` fuerza a emitir todas las variables aunque
+   una utilidad concreta no se use todavia; los alias
+   heredados de mas abajo dependen de que existan.
+============================================= */
+@theme static {
+  /* Paleta base */
+  --color-brand-50:  #F0F3FA;
+  --color-brand-100: #D5DEEF;
+  --color-brand-200: #B1C9EF;
+  --color-brand-300: #8AAEE0;
+  --color-brand-400: #628ECB;
+  --color-brand-600: #395886;
+
+  /* Alias semanticos */
+  --color-ink:      #395886; /* = brand-600, texto principal */
+  --color-ink-soft: #5a7aaa;
+  --color-card:     #ffffff; /* fondo de tarjetas */
+  --color-line:     #B1C9EF; /* = brand-200, bordes */
+
+  /* Redes sociales */
+  --color-discord: #5865F2;
+  --color-tiktok:  #010101;
+
+  /* Tipografia */
+  --font-display: "Outfit", sans-serif;
+  --font-body:    "Inter", sans-serif;
+
+  /* Radios — sobreescriben los de Tailwind a proposito,
+     para que rounded-sm/md/lg sean los del diseno */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Sombras del diseno */
+  --shadow-sm: 0 2px 8px rgba(57, 88, 134, 0.08);
+  --shadow-md: 0 8px 24px rgba(57, 88, 134, 0.12);
+  --shadow-lg: 0 20px 48px rgba(57, 88, 134, 0.16);
+}
+
+/* Tema de daisyUI con la paleta de Ducks, para que sus
+   componentes (modal, btn...) salgan ya con tus colores */
+@plugin "daisyui/theme" {
+  name: "ducks";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #F0F3FA;
+  --color-base-300: #D5DEEF;
+  --color-base-content: #395886;
+
+  --color-primary: #628ECB;
+  --color-primary-content: #ffffff;
+  --color-secondary: #395886;
+  --color-secondary-content: #ffffff;
+  --color-accent: #8AAEE0;
+  --color-accent-content: #395886;
+  --color-neutral: #395886;
+  --color-neutral-content: #F0F3FA;
+
+  --color-info: #628ECB;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+
+  --radius-selector: 9999px;
+  --radius-field: 8px;
+  --radius-box: 24px;
+}
+
+/* =============================================
+   ALIAS HEREDADOS
+   Los nombres que usa components.css, mapeados a los
+   tokens nuevos. Cada vez que se convierta un componente
+   a utilidades, su alias se puede ir borrando de aqui.
+   NO tocar los valores: son los del diseno original.
+============================================= */
+@layer base {
+  :root {
+    /* Paleta */
+    --color-50:  var(--color-brand-50);
+    --color-100: var(--color-brand-100);
+    --color-200: var(--color-brand-200);
+    --color-300: var(--color-brand-300);
+    --color-400: var(--color-brand-400);
+    --color-600: var(--color-brand-600);
+
+    /* Semanticos */
+    --bg-body:         var(--color-brand-50);
+    --bg-section-alt:  var(--color-brand-100);
+    --bg-card:         #ffffff;
+    --color-primary:   var(--color-brand-400);
+    --color-accent:    var(--color-brand-600);
+    --color-text:      var(--color-brand-600);
+    --color-text-soft: var(--color-ink-soft);
+    --color-border:    var(--color-brand-200);
+
+    --color-instagram: linear-gradient(
+      135deg,
+      #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%
+    );
+
+    /* Espaciado */
+    --space-xs:  8px;
+    --space-sm:  16px;
+    --space-md:  24px;
+    --space-lg:  48px;
+    --space-xl:  80px;
+    --space-2xl: 120px;
+
+    /* Contenedor */
+    --container-max: 1200px;
+    --container-pad: 5%;
+
+    /* Bordes y navbar */
+    --radius-full: 9999px;
+    --navbar-height: 72px;
+
+    /* Transiciones */
+    --transition-fast: 200ms ease;
+    --transition-med:  350ms ease;
+  }
+}
+
+/* =============================================
+   BASE — lo que el reset de Tailwind no cubre
+============================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Usa --navbar-height (no el token fijo) para que siga
+       el override a 60px del breakpoint movil */
+    scroll-padding-top: var(--navbar-height);
+  }
+
+  body {
+    font-family: var(--font-body), "Outfit", system-ui, sans-serif;
+    background-color: var(--color-brand-50);
+    color: var(--color-ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Tailwind v4 pone cursor:default en los botones; el diseno
+     original usaba pointer */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* =============================================
+   UTILIDADES PROPIAS
+   El gradiente de Instagram no se puede expresar como
+   color plano, asi que vive aqui como utilidad.
+============================================= */
+@utility bg-instagram {
+  background-image: linear-gradient(
+    135deg,
+    #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%
+  );
+}
