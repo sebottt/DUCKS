@@ -1,8 +1,10 @@
 import { next, rewrite } from '@vercel/functions';
 
 export const config = {
-  matcher: ['/((?!api|assets|css|js|maintenance\\.html|favicon\\.ico).*)'],
+  matcher: ['/((?!api|assets|css|js|maintenance|favicon\\.ico).*)'],
 };
+
+const MAINTENANCE_PATH = '/maintenance';
 
 const BYPASS_COOKIE = 'ducks_bypass';
 
@@ -37,5 +39,5 @@ export default function middleware(request) {
     }
   }
 
-  return rewrite(new URL('/maintenance.html', request.url));
+  return rewrite(new URL(MAINTENANCE_PATH, request.url));
 }
