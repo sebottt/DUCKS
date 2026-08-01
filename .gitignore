@@ -1,2 +1,7 @@
 .env
+.env*.local
 node_modules/
+.vercel
+
+# CSS generado por Tailwind (se construye en el deploy)
+css/app.css

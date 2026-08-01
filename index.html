@@ -20,11 +20,11 @@
     <!-- Favicon corregido: logo en WebP en lugar de SVG inexistente -->
     <link rel="icon" type="image/webp" href="./assets/webp/duck-logo-sm.webp" />
 
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js" defer></script>
+    <!-- Confetti — canvas-confetti 1.6.0, auto-alojado (dist oficial de npm, sha512 verificado) -->
+    <script src="./js/vendor/confetti.browser.js" defer></script>
 
     <!-- Estilos -->
-    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/app.css" />
 
     <title>Ducks ES | Comunidad Oficial</title>
     <!-- Preload recursos críticos -->
@@ -181,26 +181,26 @@
           <div class="redes__grid redes__grid--ducks" role="list" aria-label="Redes sociales de Ducks">
 
             <!-- Discord oficial -->
-            <article class="social-card social-card--discord" role="listitem" data-animate="fade-up" data-delay="100">
-              <div class="social-card__icon-wrap" aria-hidden="true">
+            <article class="social-card flex flex-col overflow-hidden rounded-lg border border-line bg-white shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg" data-platform="discord" role="listitem" data-animate="fade-up" data-delay="100">
+              <div class="flex h-60 items-center justify-center overflow-visible max-[640px]:h-35 bg-linear-[135deg] from-[#eef0ff] to-[#dfe2ff]" aria-hidden="true">
                 <picture>
                   <source srcset="./assets/webp/discord-azul.webp" type="image/webp">
                   <img
                     src="./assets/discord-azul.png"
                     alt=""
-                    class="social-card__icon social-card__icon--img"
+                    class="social-card__icon social-card__icon--img size-[130px] shrink-0 object-contain will-change-transform max-[640px]:size-20"
                     aria-hidden="true"
                     loading="lazy"
                     width="200" height="200"
                   />
                 </picture>
               </div>
-              <div class="social-card__body">
-                <h3 class="social-card__name">Discord</h3>
-                <p class="social-card__desc">Únete a nuestra comunidad oficial.</p>
+              <div class="flex flex-1 flex-col gap-4 px-6 pb-12 text-center">
+                <h3 class="font-display text-[1.15rem] font-bold text-brand-600">Discord</h3>
+                <p class="flex-1 text-sm leading-[1.6] text-ink-soft">Únete a nuestra comunidad oficial.</p>
                 <a
-                  href="http://discord.gg/amino"
-                  class="social-card__btn btn btn--discord"
+                  href="https://discord.gg/amino"
+                  class="btn btn--discord mt-auto w-full px-5 py-4 max-[640px]:px-4 max-[640px]:py-[18px]"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Unirse al Discord oficial de Ducks (abre en nueva pestaña)"
@@ -217,19 +217,19 @@
             </article>
 
             <!-- Página web oficial -->
-            <article class="social-card social-card--web" role="listitem" data-animate="fade-up" data-delay="200">
-              <div class="social-card__icon-wrap" aria-hidden="true">
+            <article class="social-card flex flex-col overflow-hidden rounded-lg border border-line bg-white shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg" data-platform="web" role="listitem" data-animate="fade-up" data-delay="200">
+              <div class="flex h-60 items-center justify-center overflow-visible max-[640px]:h-35 bg-linear-[135deg] from-brand-100 to-brand-200" aria-hidden="true">
                 <picture>
                   <source srcset="assets/webp/duck-logo.webp" type="image/webp">
-                  <img src="assets/duck-logo.png" alt="" class="social-card__icon social-card__icon--img" aria-hidden="true" loading="lazy" width="200" height="200">
+                  <img src="assets/duck-logo.png" alt="" class="social-card__icon social-card__icon--img size-[130px] shrink-0 object-contain will-change-transform max-[640px]:size-20" aria-hidden="true" loading="lazy" width="200" height="200">
                 </picture>
               </div>
-              <div class="social-card__body">
-                <h3 class="social-card__name">Página Web</h3>
-                <p class="social-card__desc">Explora todas nuestras novedades.</p>
+              <div class="flex flex-1 flex-col gap-4 px-6 pb-12 text-center">
+                <h3 class="font-display text-[1.15rem] font-bold text-brand-600">Página Web</h3>
+                <p class="flex-1 text-sm leading-[1.6] text-ink-soft">Explora todas nuestras novedades.</p>
                 <a
                   href="https://duckapps.com.br/"
-                  class="social-card__btn btn btn--web"
+                  class="btn btn--web mt-auto w-full px-5 py-4 max-[640px]:px-4 max-[640px]:py-[18px]"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visitar la página web oficial de Ducks (abre en nueva pestaña)"
@@ -266,19 +266,19 @@
           <div class="redes__grid redes__grid--duckes" role="list" aria-label="Redes sociales de Ducks ES">
 
             <!-- TikTok -->
-            <article class="social-card social-card--tiktok" role="listitem" data-animate="fade-up" data-delay="100">
-              <div class="social-card__icon-wrap" aria-hidden="true">
+            <article class="social-card flex flex-col overflow-hidden rounded-lg border border-line bg-white shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg" data-platform="tiktok" role="listitem" data-animate="fade-up" data-delay="100">
+              <div class="flex h-60 items-center justify-center overflow-visible max-[640px]:h-35 bg-linear-[135deg] from-[#f0f0f0] to-[#e0e0e0]" aria-hidden="true">
                 <!-- SVG TikTok -->
-                <svg class="social-card__icon social-card__icon--svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <svg class="social-card__icon size-20 shrink-0 will-change-transform text-tiktok max-[640px]:size-[50px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
                   <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.74a4.85 4.85 0 0 1-1.01-.05z"/>
                 </svg>
               </div>
-              <div class="social-card__body">
-                <h3 class="social-card__name">TikTok</h3>
-                <p class="social-card__desc">Los mejores momentos y tendencias.</p>
+              <div class="flex flex-1 flex-col gap-4 px-6 pb-12 text-center">
+                <h3 class="font-display text-[1.15rem] font-bold text-brand-600">TikTok</h3>
+                <p class="flex-1 text-sm leading-[1.6] text-ink-soft">Los mejores momentos y tendencias.</p>
                 <a
                   href="https://vt.tiktok.com/ZSXYb4EBV/"
-                  class="social-card__btn btn btn--tiktok"
+                  class="btn btn--tiktok mt-auto w-full px-5 py-4 max-[640px]:px-4 max-[640px]:py-[18px]"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Ver el TikTok de Ducks ES (abre en nueva pestaña)"
@@ -295,26 +295,26 @@
             </article>
 
             <!-- Instagram -->
-            <article class="social-card social-card--instagram" role="listitem" data-animate="fade-up" data-delay="200">
-              <div class="social-card__icon-wrap" aria-hidden="true">
+            <article class="social-card flex flex-col overflow-hidden rounded-lg border border-line bg-white shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg" data-platform="instagram" role="listitem" data-animate="fade-up" data-delay="200">
+              <div class="flex h-60 items-center justify-center overflow-visible max-[640px]:h-35 bg-linear-[135deg] from-[#fff8f0] to-[#ffe8d6]" aria-hidden="true">
                 <picture>
                   <source srcset="./assets/webp/instagram.webp" type="image/webp">
                   <img
                     src="./assets/instagram.png"
                     alt=""
-                    class="social-card__icon social-card__icon--img"
+                    class="social-card__icon social-card__icon--img size-[130px] shrink-0 object-contain will-change-transform max-[640px]:size-20"
                     aria-hidden="true"
                     loading="lazy"
                     width="200" height="200"
                   />
                 </picture>
               </div>
-              <div class="social-card__body">
-                <h3 class="social-card__name">Instagram</h3>
-                <p class="social-card__desc">Fotos, stories y detrás de escena.</p>
+              <div class="flex flex-1 flex-col gap-4 px-6 pb-12 text-center">
+                <h3 class="font-display text-[1.15rem] font-bold text-brand-600">Instagram</h3>
+                <p class="flex-1 text-sm leading-[1.6] text-ink-soft">Fotos, stories y detrás de escena.</p>
                 <a
                   href="https://www.instagram.com/ducks.app.esp?igsh=MTBtcjJuaXZvN3g2NQ=="
-                  class="social-card__btn btn btn--instagram"
+                  class="btn btn--instagram mt-auto w-full px-5 py-4 max-[640px]:px-4 max-[640px]:py-[18px]"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Ver el Instagram de Ducks ES (abre en nueva pestaña)"
@@ -342,17 +342,17 @@
         <header class="section__header" data-animate="fade-up">
           <p class="section__eyebrow">🎉 Evento Finalizado</p>
           <h2 id="sorteo-heading" class="section__title">Ganadores de <span class="text--accent">Sorteo</span></h2>
-          <p class="section__subtitle" style="margin-top: 1.5rem; max-width: 600px; margin-inline: auto;">
+          <p class="section__subtitle mt-6 max-w-[600px] mx-auto">
             <strong>¡Felicidades a los ganadores!</strong><br><br>
             ¡Sigue participando para el siguiente sorteo que tú puedes ser el próximo ganador!
           </p>
         </header>
 
-        <div class="sorteo-content" data-animate="fade-up" data-delay="100" style="display: flex; align-items: center; justify-content: center; gap: 8rem; flex-wrap: wrap; margin-top: 2rem;">
-          
+        <div class="sorteo-content flex flex-wrap items-center justify-center gap-32 mt-8" data-animate="fade-up" data-delay="100">
+
           <!-- Lado Izquierdo: Imagen -->
-          <figure class="sorteo-illustration" style="flex-shrink: 0;">
-            <img src="./assets/webp/ganador.webp" alt="Ganador Ducks Coins" width="600" height="600" decoding="lazy" style="border-radius: var(--radius-lg);" />
+          <figure class="sorteo-illustration shrink-0">
+            <img src="./assets/webp/ganador.webp" alt="Ganador Ducks Coins" width="600" height="600" decoding="lazy" class="rounded-lg" />
           </figure>
           
           <!-- Lado Derecho: Perfiles -->
@@ -394,38 +394,38 @@
         </header>
 
         <!-- GRUPO: Coordinator -->
-        <div class="staff-group" data-animate="fade-up" data-delay="0">
-          <h3 class="staff-group__title staff-group__title--coordinator">
-            <svg class="staff-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        <div class="mb-8 last:mb-0" data-animate="fade-up" data-delay="0">
+          <h3 class="flex items-center justify-center gap-2 font-display text-2xl font-bold mb-6 tracking-[-0.01em] text-[#fbbf24]">
+            <svg class="size-6 shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
             Coordinator
           </h3>
-          <ul class="staff__grid" role="list" aria-label="Coordinadores">
+          <ul class="flex flex-wrap justify-center gap-6 max-w-[1200px] mx-auto px-[5%] max-[640px]:gap-4 max-[380px]:gap-2.5" role="list" aria-label="Coordinadores">
             <!-- Coordinator 1 -->
-            <li class="staff-card">
-              <article class="staff-card__inner">
-                <div class="staff-card__photo-wrap">
+            <li class="list-none flex-[1_1_200px] max-w-[280px]">
+              <article class="staff-card__inner group flex h-full flex-col items-center gap-4 rounded-lg border border-line bg-white pt-12 px-6 pb-6 text-center shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg max-[380px]:pt-6 max-[380px]:px-2 max-[380px]:pb-4">
+                <div class="staff-card__photo-wrap flex size-25 shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-brand-200 bg-brand-100 transition-[border-color] duration-200 ease-[ease] group-hover:border-brand-400 max-[640px]:size-20">
                   <picture>
                     <source srcset="./assets/webp/liv.webp" type="image/webp">
-                    <img src="./assets/liv.jpg" alt="Foto de perfil Liv" class="staff-card__photo" width="120" height="120" loading="lazy" />
+                    <img src="./assets/liv.jpg" alt="Foto de perfil Liv" class="size-full max-w-full object-cover" width="120" height="120" loading="lazy" />
                   </picture>
                 </div>
-                <div class="staff-card__info">
-                  <h3 class="staff-card__name">Liv</h3>
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="font-display text-base font-bold text-brand-600">Liv</h3>
                   <p class="staff-card__role"><span class="role-badge role-badge--coordinator">Coordinator</span></p>
                 </div>
               </article>
             </li>
             <!-- Coordinator 2 -->
-            <li class="staff-card">
-              <article class="staff-card__inner">
-                <div class="staff-card__photo-wrap">
+            <li class="list-none flex-[1_1_200px] max-w-[280px]">
+              <article class="staff-card__inner group flex h-full flex-col items-center gap-4 rounded-lg border border-line bg-white pt-12 px-6 pb-6 text-center shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg max-[380px]:pt-6 max-[380px]:px-2 max-[380px]:pb-4">
+                <div class="staff-card__photo-wrap flex size-25 shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-brand-200 bg-brand-100 transition-[border-color] duration-200 ease-[ease] group-hover:border-brand-400 max-[640px]:size-20">
                   <picture>
                     <source srcset="./assets/webp/nova.webp" type="image/webp">
-                    <img src="./assets/Nova.png" alt="Foto de perfil Nova" class="staff-card__photo" width="120" height="120" loading="lazy" />
+                    <img src="./assets/Nova.png" alt="Foto de perfil Nova" class="size-full max-w-full object-cover" width="120" height="120" loading="lazy" />
                   </picture>
                 </div>
-                <div class="staff-card__info">
-                  <h3 class="staff-card__name">Nova</h3>
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="font-display text-base font-bold text-brand-600">Nova</h3>
                   <p class="staff-card__role"><span class="role-badge role-badge--coordinator">Coordinator</span></p>
                 </div>
               </article>
@@ -435,73 +435,73 @@
 
 
         <!-- GRUPO: Mod ES -->
-        <div class="staff-group" data-animate="fade-up" data-delay="200">
-          <h3 class="staff-group__title staff-group__title--mod">
-            <svg class="staff-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+        <div class="mb-8 last:mb-0" data-animate="fade-up" data-delay="200">
+          <h3 class="flex items-center justify-center gap-2 font-display text-2xl font-bold mb-6 tracking-[-0.01em] text-[#34d399]">
+            <svg class="size-6 shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
             Mod ES
           </h3>
-          <ul class="staff__grid" role="list" aria-label="Moderadores ES">
+          <ul class="flex flex-wrap justify-center gap-6 max-w-[1200px] mx-auto px-[5%] max-[640px]:gap-4 max-[380px]:gap-2.5" role="list" aria-label="Moderadores ES">
             <!-- Mod: Alan -->
-            <li class="staff-card">
-              <article class="staff-card__inner">
-                <div class="staff-card__photo-wrap">
+            <li class="list-none flex-[1_1_200px] max-w-[280px]">
+              <article class="staff-card__inner group flex h-full flex-col items-center gap-4 rounded-lg border border-line bg-white pt-12 px-6 pb-6 text-center shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg max-[380px]:pt-6 max-[380px]:px-2 max-[380px]:pb-4">
+                <div class="staff-card__photo-wrap flex size-25 shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-brand-200 bg-brand-100 transition-[border-color] duration-200 ease-[ease] group-hover:border-brand-400 max-[640px]:size-20">
                   <picture>
                     <source srcset="./assets/webp/alan.webp" type="image/webp">
-                    <img src="./assets/alan.jpg" alt="Foto de perfil Alan" class="staff-card__photo" width="120" height="120" loading="lazy" />
+                    <img src="./assets/alan.jpg" alt="Foto de perfil Alan" class="size-full max-w-full object-cover" width="120" height="120" loading="lazy" />
                   </picture>
                 </div>
-                <div class="staff-card__info">
-                  <h3 class="staff-card__name">Alan</h3>
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="font-display text-base font-bold text-brand-600">Alan</h3>
                   <p class="staff-card__role"><span class="role-badge role-badge--mod-es">Mod ES</span></p>
                 </div>
               </article>
             </li>
             <!-- Mod: Asher -->
-            <li class="staff-card">
-              <article class="staff-card__inner">
-                <div class="staff-card__photo-wrap">
+            <li class="list-none flex-[1_1_200px] max-w-[280px]">
+              <article class="staff-card__inner group flex h-full flex-col items-center gap-4 rounded-lg border border-line bg-white pt-12 px-6 pb-6 text-center shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg max-[380px]:pt-6 max-[380px]:px-2 max-[380px]:pb-4">
+                <div class="staff-card__photo-wrap flex size-25 shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-brand-200 bg-brand-100 transition-[border-color] duration-200 ease-[ease] group-hover:border-brand-400 max-[640px]:size-20">
                   <picture>
                     <source srcset="./assets/webp/asher.webp" type="image/webp">
-                    <img src="./assets/asher.jpeg" alt="Foto de perfil Asher" class="staff-card__photo" width="120" height="120" loading="lazy" />
+                    <img src="./assets/asher.jpeg" alt="Foto de perfil Asher" class="size-full max-w-full object-cover" width="120" height="120" loading="lazy" />
                   </picture>
                 </div>
-                <div class="staff-card__info">
-                  <h3 class="staff-card__name">Asher</h3>
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="font-display text-base font-bold text-brand-600">Asher</h3>
                   <p class="staff-card__role"><span class="role-badge role-badge--mod-es">Mod ES</span></p>
                 </div>
               </article>
             </li>
             <!-- Mod: Dy lie -->
-            <li class="staff-card">
-              <article class="staff-card__inner">
-                <div class="staff-card__photo-wrap">
+            <li class="list-none flex-[1_1_200px] max-w-[280px]">
+              <article class="staff-card__inner group flex h-full flex-col items-center gap-4 rounded-lg border border-line bg-white pt-12 px-6 pb-6 text-center shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg max-[380px]:pt-6 max-[380px]:px-2 max-[380px]:pb-4">
+                <div class="staff-card__photo-wrap flex size-25 shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-brand-200 bg-brand-100 transition-[border-color] duration-200 ease-[ease] group-hover:border-brand-400 max-[640px]:size-20">
                   <picture>
                     <source srcset="./assets/webp/dylie.webp" type="image/webp">
-                    <img src="./assets/Dy lie.jpeg" alt="Foto de perfil Dy lie" class="staff-card__photo" width="120" height="120" loading="lazy" />
+                    <img src="./assets/Dy lie.jpeg" alt="Foto de perfil Dy lie" class="size-full max-w-full object-cover" width="120" height="120" loading="lazy" />
                   </picture>
                 </div>
-                <div class="staff-card__info">
-                  <h3 class="staff-card__name">Dy lie</h3>
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="font-display text-base font-bold text-brand-600">Dy lie</h3>
                   <p class="staff-card__role"><span class="role-badge role-badge--mod-es">Mod ES</span></p>
                 </div>
               </article>
             </li>
             <!-- Dev del sitio -->
-            <li class="staff-card staff-card--dev">
-              <article class="staff-card__inner">
-                <div class="staff-card__photo-wrap">
+            <li class="staff-card--dev list-none flex-[1_1_200px] max-w-[280px]">
+              <article class="staff-card__inner group flex h-full flex-col items-center gap-4 rounded-lg border border-line bg-white pt-12 px-6 pb-6 text-center shadow-sm transition-[transform,box-shadow] duration-[350ms] ease-[ease] hover:-translate-y-1.5 hover:shadow-lg max-[380px]:pt-6 max-[380px]:px-2 max-[380px]:pb-4">
+                <div class="staff-card__photo-wrap flex size-25 shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-brand-200 bg-brand-100 transition-[border-color] duration-200 ease-[ease] group-hover:border-brand-400 max-[640px]:size-20">
                   <picture>
                     <source srcset="./assets/webp/huevo.webp" type="image/webp">
-                    <img src="./assets/huevo.jpg" alt="Foto de perfil 🥚" class="staff-card__photo" width="120" height="120" loading="lazy" />
+                    <img src="./assets/huevo.jpg" alt="Foto de perfil 🥚" class="size-full max-w-full object-cover" width="120" height="120" loading="lazy" />
                   </picture>
                 </div>
-                <div class="staff-card__info">
-                  <h3 class="staff-card__name">🥚</h3>
+                <div class="flex flex-col items-center gap-2">
+                  <h3 class="font-display text-base font-bold text-brand-600">🥚</h3>
                   <p class="staff-card__role">
                     <span class="role-badge role-badge--developer">Developer</span>
                     <span class="role-badge role-badge--mod-es">Mod ES</span>
                     <span class="role-badge role-badge--webdev">
-                      <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10" style="vertical-align:middle;margin-right:3px"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                      <svg viewBox="0 0 24 24" fill="currentColor" width="10" height="10" class="align-middle mr-[3px]"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
                       Web Dev
                     </span>
                   </p>
@@ -529,7 +529,7 @@
         <nav class="footer__social" aria-label="Redes sociales de Ducks ES">
           <ul role="list" class="footer__social-list">
             <li>
-              <a href="http://discord.gg/amino" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Discord oficial de Ducks">Discord</a>
+              <a href="https://discord.gg/amino" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Discord oficial de Ducks">Discord</a>
             </li>
             <li>
               <a href="https://duckapps.com.br/" class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label="Página web oficial de Ducks">Web Oficial</a>

@@ -1,119 +1,16 @@
 /* =============================================
-   DUCK ES — styles.css
-   Paleta:
-     --color-50:  #F0F3FA
-     --color-100: #D5DEEF
-     --color-200: #B1C9EF
-     --color-300: #8AAEE0
-     --color-400: #628ECB
-     --color-600: #395886
-   ============================================= */
-
-/* =============================================
-   0. RESET & BASE
+   DUCKS ES — capa de componentes
+   ---------------------------------------------
+   Portado desde el styles.css original. Los TOKENS
+   ya NO viven aqui: estan en css/input.css dentro
+   de @theme, para que Tailwind genere utilidades
+   con ellos. Este archivo se importa dentro de
+   layer(components), asi que cualquier utilidad de
+   Tailwind puesta en el marcado GANA sobre estas
+   reglas — que es lo que permite ir convirtiendo
+   componente a componente sin pelearse con la
+   especificidad.
 ============================================= */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
-}
-
-body {
-  font-family: 'Inter', 'Outfit', system-ui, sans-serif;
-  background-color: var(--color-50);
-  color: var(--color-600);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-ul, ol {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-  font-family: inherit;
-}
-
-/* =============================================
-   1. DESIGN TOKENS — Variables CSS
-============================================= */
-:root {
-  /* Paleta de colores */
-  --color-50:  #F0F3FA;
-  --color-100: #D5DEEF;
-  --color-200: #B1C9EF;
-  --color-300: #8AAEE0;
-  --color-400: #628ECB;
-  --color-600: #395886;
-
-  /* Alias semánticos */
-  --bg-body:        var(--color-50);
-  --bg-section-alt: var(--color-100);
-  --bg-card:        #ffffff;
-  --color-primary:  var(--color-400);
-  --color-accent:   var(--color-600);
-  --color-text:     var(--color-600);
-  --color-text-soft: #5a7aaa;
-  --color-border:   var(--color-200);
-
-  /* Colores de Redes Sociales */
-  --color-discord:   #5865F2;
-  --color-tiktok:    #010101;
-  --color-instagram: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-
-  /* Tipografía */
-  --font-display: 'Outfit', sans-serif;
-  --font-body:    'Inter', sans-serif;
-
-  /* Espaciado */
-  --space-xs:  8px;
-  --space-sm:  16px;
-  --space-md:  24px;
-  --space-lg:  48px;
-  --space-xl:  80px;
-  --space-2xl: 120px;
-
-  /* Contenedor */
-  --container-max: 1200px;
-  --container-pad: 5%;
-
-  /* Bordes */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-full: 9999px;
-
-  /* Sombras */
-  --shadow-sm: 0 2px 8px rgba(57, 88, 134, 0.08);
-  --shadow-md: 0 8px 24px rgba(57, 88, 134, 0.12);
-  --shadow-lg: 0 20px 48px rgba(57, 88, 134, 0.16);
-
-  /* Navbar */
-  --navbar-height: 72px;
-
-  /* Transiciones */
-  --transition-fast: 200ms ease;
-  --transition-med:  350ms ease;
-}
 
 /* =============================================
    2. UTILIDADES
@@ -745,89 +642,9 @@ button {
   white-space: nowrap;
 }
 
-/* Social Card */
-.social-card {
-  background: var(--bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-med), box-shadow var(--transition-med);
-}
-
-.social-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-}
-
-.social-card__icon-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 240px; /* Restaurado al tamaño exacto de antes */
-  padding: 0; 
-  overflow: visible; /* Permite que la imagen grande sobresalga sin romper el diseño */
-}
-
-/* Colores de fondo del ícono según plataforma */
-.social-card--discord .social-card__icon-wrap  { background: linear-gradient(135deg, #eef0ff 0%, #dfe2ff 100%); }
-.social-card--web .social-card__icon-wrap       { background: linear-gradient(135deg, var(--color-100) 0%, var(--color-200) 100%); }
-.social-card--tiktok .social-card__icon-wrap    { background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%); }
-.social-card--instagram .social-card__icon-wrap { background: linear-gradient(135deg, #fff8f0 0%, #ffe8d6 100%); }
-
-.social-card__icon--img {
-  width: 130px;
-  height: 130px;
-  object-fit: contain;
-  border-radius: 0;
-}
-
-.social-card__icon--svg {
-  width: 80px;
-  height: 80px;
-}
-
-.social-card__icon {
-  flex-shrink: 0;
-  will-change: transform;
-}
-
-/* Colores de ícono */
-.social-card--discord .social-card__icon  { color: #5865F2; }
-.social-card--web .social-card__icon      { color: var(--color-600); }
-.social-card--tiktok .social-card__icon   { color: #010101; }
-.social-card--instagram .social-card__icon { color: #E1306C; }
-
-.social-card__body {
-  padding: 0 var(--space-md) var(--space-lg);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  flex: 1;
-  text-align: center;
-}
-
-.social-card__name {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--color-600);
-}
-
-.social-card__desc {
-  font-size: 0.875rem;
-  color: var(--color-text-soft);
-  line-height: 1.6;
-  flex: 1;
-}
-
-.social-card__btn {
-  width: 100%;
-  margin-top: auto;
-  padding: 16px 20px;
-}
+/* Social Card -> convertida a utilidades de Tailwind en index.html.
+   Las clases .social-card y .social-card__icon* siguen en el marcado
+   porque main.js las usa como gancho (initSocialCardHover). */
 
 /* =============================================
    10b. SECCIÓN: SORTEO DUCKS ES
@@ -1009,6 +826,10 @@ button {
 
 /* =============================================
    11. SECCIÓN: STAFF
+   Las tarjetas se convirtieron a utilidades en index.html.
+   Aqui solo quedan: .section--staff (pendiente del bug de
+   --color-surface), las .role-badge* (5 variantes semanticas) y
+   los selectores de variante .staff-card--dev.
 ============================================= */
 .section--staff {
   background-color: var(--color-surface);
@@ -1016,118 +837,21 @@ button {
   padding-bottom: var(--space-xl);
 }
 
-.staff-group {
-  margin-bottom: 2rem; /* Más compacto que antes */
-}
-.staff-group:last-child {
-  margin-bottom: 0;
-}
 
-.staff-group__title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.01em;
-}
 
-.staff-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0; /* Evita que el SVG crezca en contenedores flex */
-}
 
 /* Colores por rango */
-.staff-group__title--coordinator {
-  color: #fbbf24; /* Dorado / Corona */
-}
-.staff-group__title--event-master {
-  color: #a78bfa; /* Morado / Eventos */
-}
-.staff-group__title--mod {
-  color: #34d399; /* Verde / Escudo moderación */
-}
 
-.staff__grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-md);
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--container-pad);
-}
 
 /* Staff Card */
-.staff-card {
-  list-style: none;
-  flex: 1 1 200px;
-  max-width: 280px; /* Evita que se estiren demasiado en pantallas grandes */
-}
 
-.staff-card__inner {
-  background: var(--bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg) var(--space-md) var(--space-md);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-sm);
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-med), box-shadow var(--transition-med);
-  height: 100%;
-}
 
-.staff-card__inner:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-}
 
 /* Foto de perfil */
-.staff-card__photo-wrap {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--color-200);
-  flex-shrink: 0;
-  background: var(--color-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color var(--transition-fast);
-}
 
-.staff-card__inner:hover .staff-card__photo-wrap {
-  border-color: var(--color-400);
-}
 
-.staff-card__photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  max-width: 100%;
-}
 
-.staff-card__info {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-}
 
-.staff-card__name {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-600);
-}
 
 /* Role Badges */
 .role-badge {
@@ -1496,9 +1220,6 @@ button {
   }
 
   /* Ya no reducimos tanto el padding de las social cards en móvil para asegurar que sean clickeables */
-  .social-card__btn {
-    padding: 18px 16px;
-  }
 
   /* Hero */
   .hero__content {
@@ -1521,30 +1242,11 @@ button {
     gap: var(--space-lg);
   }
 
-  .social-card__icon--img {
-    width: 80px;
-    height: 80px;
-  }
 
-  .social-card__icon--svg {
-    width: 50px;
-    height: 50px;
-  }
 
-  .social-card__icon-wrap {
-    height: 140px; /* Restaurado al tamaño exacto de antes */
-    padding: 0;
-  }
 
   /* Staff: gap más pequeño en móvil */
-  .staff__grid {
-    gap: var(--space-sm);
-  }
 
-  .staff-card__photo-wrap {
-    width: 80px;
-    height: 80px;
-  }
 
   /* Footer */
   .site-footer {
@@ -1556,13 +1258,7 @@ button {
    14. RESPONSIVE — Móvil muy pequeño (max 380px)
 ============================================= */
 @media (max-width: 380px) {
-  .staff__grid {
-    gap: 10px;
-  }
 
-  .staff-card__inner {
-    padding: var(--space-md) var(--space-xs) var(--space-sm);
-  }
 }
 
 /* =============================================

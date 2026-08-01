@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#395886" />
+    <title>Estamos en mantenimiento | Ducks ES</title>
+
+    <!--
+      Página autocontenida a propósito: sin CSS externo, sin JS y sin fuentes
+      remotas. Si algo del sitio está roto, esta pantalla tiene que seguir
+      renderizando igual. La única dependencia es el logo, que es local.
+    -->
+    <style>
+      :root {
+        --color-50:  #F0F3FA;
+        --color-100: #D5DEEF;
+        --color-200: #B1C9EF;
+        --color-400: #628ECB;
+        --color-600: #395886;
+        --text-soft: #5a7aaa;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: var(--color-50);
+        background-image:
+          radial-gradient(circle at 15% 20%, rgba(98, 142, 203, 0.18), transparent 45%),
+          radial-gradient(circle at 85% 75%, rgba(177, 201, 239, 0.35), transparent 45%);
+        color: var(--color-600);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 520px;
+        padding: 48px 36px;
+        background: #fff;
+        border: 1px solid var(--color-200);
+        border-radius: 24px;
+        box-shadow: 0 18px 50px -20px rgba(57, 88, 134, 0.35);
+      }
+
+      .logo {
+        width: 88px;
+        height: 88px;
+        margin-bottom: 24px;
+        animation: bob 2.6s ease-in-out infinite;
+      }
+
+      @keyframes bob {
+        0%, 100% { transform: translateY(0); }
+        50%      { transform: translateY(-10px); }
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: clamp(1.6rem, 5vw, 2.1rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+
+      .accent { color: var(--color-400); }
+
+      p {
+        margin: 0 auto;
+        max-width: 40ch;
+        color: var(--text-soft);
+        font-size: 1.02rem;
+      }
+
+      .dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin: 32px 0 28px;
+      }
+
+      .dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--color-400);
+        animation: pulse 1.4s ease-in-out infinite;
+      }
+
+      .dots span:nth-child(2) { animation-delay: 0.2s; }
+      .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+        50%      { opacity: 1;   transform: scale(1); }
+      }
+
+      .footer {
+        margin-top: 28px;
+        padding-top: 22px;
+        border-top: 1px solid var(--color-100);
+        font-size: 0.88rem;
+        color: var(--text-soft);
+      }
+
+      .footer a {
+        color: var(--color-400);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .footer a:hover,
+      .footer a:focus-visible { text-decoration: underline; }
+
+      /* Respeta a quien prefiere menos movimiento */
+      @media (prefers-reduced-motion: reduce) {
+        .logo, .dots span { animation: none; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="card">
+      <picture>
+        <source srcset="/assets/webp/duck-logo.webp" type="image/webp" />
+        <img src="/assets/duck-logo.png" alt="Ducks ES" class="logo" width="88" height="88" />
+      </picture>
+
+      <h1>Estamos en <span class="accent">mantenimiento</span></h1>
+
+      <p>
+        Estamos aplicando mejoras al sitio. Volvemos en un rato —
+        gracias por la paciencia.
+      </p>
+
+      <div class="dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+
+      <div class="footer">
+        Mientras tanto, pásate por nuestro
+        <a href="https://discord.gg/amino" target="_blank" rel="noopener noreferrer">Discord</a>.
+      </div>
+    </main>
+  </body>
+</html>
