@@ -1,0 +1,152 @@
+
+
+@import "tailwindcss";
+
+@import "./components.css" layer(components);
+
+@source "../*.html";
+@source "../js/**/*.js";
+
+@plugin "daisyui" {
+  themes: false; 
+}
+
+@theme static {
+  
+  --color-brand-50:  #F0F3FA;
+  --color-brand-100: #D5DEEF;
+  --color-brand-200: #B1C9EF;
+  --color-brand-300: #8AAEE0;
+  --color-brand-400: #628ECB;
+  --color-brand-600: #395886;
+
+  
+  --color-ink:      #395886; 
+  --color-ink-soft: #5a7aaa;
+  --color-card:     #ffffff; 
+  --color-line:     #B1C9EF; 
+
+  
+  --color-discord: #5865F2;
+  --color-tiktok:  #010101;
+
+  
+  --font-display: "Outfit", sans-serif;
+  --font-body:    "Inter", sans-serif;
+
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  
+  --shadow-sm: 0 2px 8px rgba(57, 88, 134, 0.08);
+  --shadow-md: 0 8px 24px rgba(57, 88, 134, 0.12);
+  --shadow-lg: 0 20px 48px rgba(57, 88, 134, 0.16);
+}
+
+@plugin "daisyui/theme" {
+  name: "ducks";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #F0F3FA;
+  --color-base-300: #D5DEEF;
+  --color-base-content: #395886;
+
+  --color-primary: #628ECB;
+  --color-primary-content: #ffffff;
+  --color-secondary: #395886;
+  --color-secondary-content: #ffffff;
+  --color-accent: #8AAEE0;
+  --color-accent-content: #395886;
+  --color-neutral: #395886;
+  --color-neutral-content: #F0F3FA;
+
+  --color-info: #628ECB;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+
+  --radius-selector: 9999px;
+  --radius-field: 8px;
+  --radius-box: 24px;
+}
+
+@layer base {
+  :root {
+    
+    --color-50:  var(--color-brand-50);
+    --color-100: var(--color-brand-100);
+    --color-200: var(--color-brand-200);
+    --color-300: var(--color-brand-300);
+    --color-400: var(--color-brand-400);
+    --color-600: var(--color-brand-600);
+
+    
+    --bg-body:         var(--color-brand-50);
+    --bg-section-alt:  var(--color-brand-100);
+    --bg-card:         #ffffff;
+    --color-primary:   var(--color-brand-400);
+    --color-accent:    var(--color-brand-600);
+    --color-text:      var(--color-brand-600);
+    --color-text-soft: var(--color-ink-soft);
+    --color-border:    var(--color-brand-200);
+
+    --color-instagram: linear-gradient(
+      135deg,
+      #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%
+    );
+
+    
+    --space-xs:  8px;
+    --space-sm:  16px;
+    --space-md:  24px;
+    --space-lg:  48px;
+    --space-xl:  80px;
+    --space-2xl: 120px;
+
+    
+    --container-max: 1200px;
+    --container-pad: 5%;
+
+    
+    --radius-full: 9999px;
+    --navbar-height: 72px;
+
+    
+    --transition-fast: 200ms ease;
+    --transition-med:  350ms ease;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    
+    scroll-padding-top: var(--navbar-height);
+  }
+
+  body {
+    font-family: var(--font-body), "Outfit", system-ui, sans-serif;
+    background-color: var(--color-brand-50);
+    color: var(--color-ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility bg-instagram {
+  background-image: linear-gradient(
+    135deg,
+    #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%
+  );
+}
