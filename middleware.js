@@ -17,10 +17,19 @@ import { next, rewrite } from '@vercel/functions';
 //   - /api        las funciones tienen su propia logica
 //   - /assets     el logo de la propia pantalla de mantenimiento
 //   - /css, /js   estaticos
-//   - maintenance.html  si no, se reescribiria sobre si misma en bucle
+//   - maintenance  si no, se reescribiria sobre si misma en bucle.
+//     Con cleanUrls:true la pagina se sirve SIN extension, asi que hay que
+//     excluir tanto /maintenance como /maintenance.html (esta ultima solo
+//     recibe el 308 de cleanUrls, pero la dejamos fuera por si acaso).
 export const config = {
-  matcher: ['/((?!api|assets|css|js|maintenance\\.html|favicon\\.ico).*)'],
+  matcher: ['/((?!api|assets|css|js|maintenance|favicon\\.ico).*)'],
 };
+
+// OJO: con "cleanUrls": true en vercel.json, el build mapea maintenance.html
+// al path "maintenance" (se ve en .vercel/output/config.json -> overrides).
+// Reescribir a "/maintenance.html" apunta a una ruta que NO existe y devuelve
+// 404 en todas las rutas interceptadas. Tiene que ser sin extension.
+const MAINTENANCE_PATH = '/maintenance';
 
 const BYPASS_COOKIE = 'ducks_bypass';
 
@@ -55,5 +64,5 @@ export default function middleware(request) {
     }
   }
 
-  return rewrite(new URL('/maintenance.html', request.url));
+  return rewrite(new URL(MAINTENANCE_PATH, request.url));
 }

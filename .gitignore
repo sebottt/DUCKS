@@ -5,3 +5,4 @@ node_modules/
 
 # CSS generado por Tailwind (se construye en el deploy)
 css/app.css
+.env*
