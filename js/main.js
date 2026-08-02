@@ -85,11 +85,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Hero: animación CSS al cargar (sin JS) ---
     // Las clases .anim-hero-* se añaden aquí para disparar los @keyframes
-    const heroEls = document.querySelectorAll('.site-header, .navbar__brand, .navbar__item, .hero__text > *, .hero__illustration-img');
-    heroEls.forEach((el, i) => {
-      el.style.animationDelay = `${i * 0.08}s`;
-      el.classList.add('anim-hero-in');
-    });
+    function triggerHeroAnimation() {
+      const heroEls = document.querySelectorAll('.site-header, .navbar__brand, .navbar__item, .hero__text > *, .hero__illustration-img');
+      heroEls.forEach((el, i) => {
+        el.style.animationDelay = `${i * 0.08}s`;
+        el.classList.add('anim-hero-in');
+      });
+    }
+
+    // Si hay pantalla de carga, esperar a que loader.js avise que va a
+    // ocultarse (evento 'ducks:loader-hide'): si se dispara en DOMContentLoaded
+    // como antes, la animación termina oculta detrás del loader y el usuario
+    // nunca la ve. Sin loader (no debería pasar en las páginas actuales),
+    // se dispara de inmediato como antes.
+    if (document.getElementById('page-loader')) {
+      document.addEventListener('ducks:loader-hide', triggerHeroAnimation, { once: true });
+    } else {
+      triggerHeroAnimation();
+    }
 
     if (prefersReduced) return;
 

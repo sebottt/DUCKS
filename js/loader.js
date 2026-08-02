@@ -22,6 +22,10 @@
   function hide() {
     if (hidden) return;
     hidden = true;
+    // Avisa a otros scripts (ej. main.js) que el loader esta por
+    // desvanecerse, para que disparen sus animaciones de entrada justo
+    // ahora y no antes, cuando quedarian ocultas detras del loader.
+    document.dispatchEvent(new CustomEvent('ducks:loader-hide'));
     loader.classList.add('page-loader--hidden');
     // Saca el loader del flujo tras el fade, para que no intercepte
     // clics ni quede estorbando a lectores de pantalla.
