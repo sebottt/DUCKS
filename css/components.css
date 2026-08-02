@@ -359,7 +359,11 @@
   position: relative;
   /* Recuadro con margen visible (fondo de --bg-body) por los 4 lados,
      en vez de fondo a todo el ancho. El margen superior deja el
-     recuadro completo debajo del navbar fijo (no tapado por el blur). */
+     recuadro completo debajo del navbar fijo (no tapado por el blur).
+     width:auto pisa el width:100% de .section — si no, la caja mide
+     100% + el margen horizontal (110%) y el lado derecho queda
+     empujado fuera de la pantalla, recortado por overflow-x:hidden. */
+  width: auto;
   margin: calc(var(--navbar-height) + var(--space-md)) var(--container-pad) var(--space-md);
   min-height: calc(100vh - var(--navbar-height) - (var(--space-md) * 2));
   border-radius: var(--radius-lg);
