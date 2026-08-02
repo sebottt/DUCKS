@@ -23,7 +23,8 @@
   "homepage": "https://github.com/sebottt/DUCKS#readme",
   "dependencies": {
     "@supabase/supabase-js": "^2.110.7",
-    "@vercel/functions": "^3.7.6"
+    "@vercel/functions": "^3.7.6",
+    "@vercel/speed-insights": "^2.0.0"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
