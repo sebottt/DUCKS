@@ -1036,6 +1036,17 @@
 [data-animate="fade-up"][data-delay="200"] { transition-delay: 0.2s; }
 [data-animate="fade-up"][data-delay="300"] { transition-delay: 0.3s; }
 
+[data-animate="fade-left"] {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-animate="fade-left"].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .section:not(.section--hero) {
   opacity: 0;
   transform: translateY(24px);
@@ -1050,6 +1061,7 @@
 @media (prefers-reduced-motion: reduce) {
   .anim-hero-in,
   [data-animate="fade-up"],
+  [data-animate="fade-left"],
   .section:not(.section--hero) {
     animation: none !important;
     transition: none !important;
