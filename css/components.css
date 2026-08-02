@@ -325,6 +325,7 @@
 .section--hero {
   position: relative;
   
+  width: auto;
   margin: calc(var(--navbar-height) + var(--space-md)) var(--container-pad) var(--space-md);
   min-height: calc(100vh - var(--navbar-height) - (var(--space-md) * 2));
   border-radius: var(--radius-lg);
