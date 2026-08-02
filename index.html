@@ -95,6 +95,9 @@
           <li class="navbar__item">
             <a href="#staff" class="navbar__link">Staff</a>
           </li>
+          <li class="navbar__item">
+            <a href="#metricas" class="navbar__link">Métricas</a>
+          </li>
         </ul>
 
       </nav>
@@ -516,6 +519,41 @@
 
       </section>
 
+      
+      <section id="metricas" class="section section--metricas" aria-labelledby="metricas-heading">
+
+        <header class="section__header" data-animate="fade-up">
+          <p class="section__eyebrow">Métricas en vivo</p>
+          <h2 id="metricas-heading" class="section__title">Contador de <span class="text--accent">Visitantes</span></h2>
+          <p class="section__subtitle">Personas que han descubierto este proyecto</p>
+        </header>
+
+        <div class="metrics__wrap" data-animate="fade-up" data-delay="100">
+          <article class="metrics-card relative flex items-center gap-6 overflow-hidden rounded-lg border border-line bg-white p-8 shadow-md max-[640px]:flex-col max-[640px]:text-center">
+
+            <div class="metrics-card__glow" aria-hidden="true"></div>
+
+            <div class="flex size-16 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-400" aria-hidden="true">
+              <svg class="size-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+
+            <div class="relative">
+              <p class="text-xs font-bold uppercase tracking-wider text-ink-soft">Visitas totales</p>
+              <div class="metrics-card__number font-display text-ink" id="visitor-count" aria-live="polite">0</div>
+              <p class="text-sm text-ink-soft">Se actualiza automáticamente cada 20 segundos.</p>
+              <p class="mt-2 text-sm text-ink-soft" id="visitor-count-error" hidden>No se pudo cargar el contador en este momento.</p>
+            </div>
+
+          </article>
+        </div>
+
+      </section>
+
     </main>
 
     
@@ -549,7 +587,7 @@
           <span class="footer__legal-sep" aria-hidden="true">·</span>
           <a href="./terminos.html" class="footer__legal-link">Términos y Condiciones</a>
           <span class="footer__legal-sep" aria-hidden="true">·</span>
-          <a href="./metricas.html" class="footer__legal-link">Métricas en Vivo</a>
+          <a href="#metricas" class="footer__legal-link">Métricas en Vivo</a>
         </nav>
 
         <p class="footer__copyright">
@@ -590,5 +628,6 @@
 
     
     <script src="./js/main.js" defer></script>
+    <script src="./js/metricas.js" defer></script>
   </body>
 </html>

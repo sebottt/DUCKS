@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   (function initScrollSpy() {
-    const sectionIds = ['hero', 'redes-ducks', 'redes-duckes', 'staff'];
+    const sectionIds = ['hero', 'redes-ducks', 'redes-duckes', 'staff', 'metricas'];
     const sections   = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     const navLinks   = document.querySelectorAll('.navbar__link');
     if (!sections.length) return;
