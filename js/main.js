@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       threshold: 0.1
     });
 
-    document.querySelectorAll('[data-animate="fade-up"], .section:not(.section--hero)').forEach(el => {
+    document.querySelectorAll('[data-animate="fade-up"], [data-animate="fade-left"], .section:not(.section--hero)').forEach(el => {
       observer.observe(el);
     });
   })();
