@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Política de Privacidad de Ducks ES — Comunidad oficial en español." />
+    <meta name="description" content="Métricas en vivo de Ducks ES — cuántas personas han visitado el sitio." />
     <meta name="robots" content="noindex, follow" />
-    <title>Política de Privacidad | Ducks ES</title>
+    <title>Métricas en Vivo | Ducks ES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./css/legal.css" />
+    <link rel="stylesheet" href="./css/metricas.css" />
     <link rel="stylesheet" href="./css/loader.css" />
     <noscript><style>#page-loader { display: none; }</style></noscript>
     <script defer src="/_vercel/speed-insights/script.js"></script>
@@ -36,7 +37,6 @@
       </div>
     </div>
     <script src="./js/loader.js"></script>
-    <script src="./js/visit-tracker.js"></script>
 
     <!-- NAVBAR -->
     <header class="legal-header">
@@ -55,55 +55,39 @@
       </a>
     </header>
 
-    <!-- HERO LEGAL -->
+    <!-- HERO -->
     <section class="legal-hero">
       <div class="legal-hero__inner">
-        <div class="legal-hero__badge">Legal</div>
-        <h1 class="legal-hero__title">Política de <span class="accent">Privacidad</span></h1>
-        <p class="legal-hero__date">Última actualización: <time datetime="2026-07">Julio 2026</time></p>
+        <div class="legal-hero__badge">Métricas en vivo</div>
+        <h1 class="legal-hero__title">Estadísticas de la <span class="accent">Comunidad</span></h1>
+        <p class="legal-hero__date">Visitas contabilizadas desde que se activó este contador</p>
       </div>
     </section>
 
-    <!-- CONTENIDO -->
-    <main class="legal-main" id="main-content">
-      <div class="legal-card">
+    <!-- CONTADOR -->
+    <main id="main-content">
+      <section class="metrics-section">
+        <p class="metrics-eyebrow">Contador de visitantes</p>
+        <h2 class="metrics-title">Personas que han <span class="accent">descubierto</span> este proyecto</h2>
 
-        <p class="legal-intro">
-          Esta Política de Privacidad establece los términos bajo los cuales el sitio web informativo y de la comunidad en español
-          <strong>Ducks ES</strong> gestiona la navegación de sus usuarios.
-        </p>
-
-        <article class="legal-section">
-          <div class="legal-section__number">01</div>
-          <div class="legal-section__content">
-            <h2>No recopilación de datos personales</h2>
-            <p>Ducks ES es un sitio web puramente informativo y de soporte comunitario. Declaramos de forma explícita que <strong>no solicitamos, no recopilamos, no procesamos ni almacenamos ningún tipo de datos personales</strong> de los visitantes. El sitio no cuenta con formularios de registro, sistemas de comentarios, inicios de sesión ni bases de datos de usuarios.</p>
+        <div class="counter-card">
+          <div class="counter-card__glow" aria-hidden="true"></div>
+          <div class="counter-card__icon-wrap" aria-hidden="true">
+            <svg class="counter-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
           </div>
-        </article>
-
-        <article class="legal-section">
-          <div class="legal-section__number">02</div>
-          <div class="legal-section__content">
-            <h2>Enlaces a terceros</h2>
-            <p>Este sitio web puede contener enlaces a otras páginas de interés (como la Google Play Store o redes oficiales de la aplicación). Una vez que usted hace clic en estos enlaces y abandona nuestra página, ya no tenemos control sobre el sitio al que es redirigido y, por lo tanto, no somos responsables de los términos o privacidad de esos otros sitios terceros.</p>
+          <div>
+            <p class="counter-card__label">Visitas totales</p>
+            <div class="counter-card__number" id="visitor-count" aria-live="polite">0</div>
+            <p class="counter-card__desc">Se actualiza automáticamente cada 20 segundos.</p>
+            <p class="counter-card__error" id="visitor-count-error" hidden>No se pudo cargar el contador en este momento.</p>
           </div>
-        </article>
-
-        <article class="legal-section">
-          <div class="legal-section__number">03</div>
-          <div class="legal-section__content">
-            <h2>Cookies</h2>
-            <p>Este sitio web utiliza una estructura estática y limpia que no emplea cookies de seguimiento ni almacenamiento para perfiles comerciales.</p>
-          </div>
-        </article>
-
-      </div>
-
-      <!-- Otras páginas legales -->
-      <div class="legal-also">
-        <p>Ver también:</p>
-        <a href="./terminos.html" class="legal-also__link">Términos y Condiciones →</a>
-      </div>
+        </div>
+      </section>
     </main>
 
     <!-- FOOTER -->
@@ -116,5 +100,6 @@
       </nav>
     </footer>
 
+    <script src="./js/metricas.js"></script>
   </body>
 </html>
