@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
      3. SCROLL SPY — Sección activa en navbar
   ============================================= */
   (function initScrollSpy() {
-    const sectionIds = ['hero', 'redes-ducks', 'redes-duckes', 'staff', 'metricas'];
+    const sectionIds = ['hero', 'metricas', 'redes-ducks', 'redes-duckes', 'staff'];
     const sections   = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     const navLinks   = document.querySelectorAll('.navbar__link');
     if (!sections.length) return;
