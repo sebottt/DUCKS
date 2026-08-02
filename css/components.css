@@ -357,7 +357,12 @@
 ============================================= */
 .section--hero {
   position: relative;
-  min-height: 100vh;
+  /* Recuadro con margen visible (fondo de --bg-body) por los 4 lados,
+     en vez de fondo a todo el ancho. El margen superior deja el
+     recuadro completo debajo del navbar fijo (no tapado por el blur). */
+  margin: calc(var(--navbar-height) + var(--space-md)) var(--container-pad) var(--space-md);
+  min-height: calc(100vh - var(--navbar-height) - (var(--space-md) * 2));
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -369,7 +374,7 @@
     var(--color-100) 40%,
     var(--color-200) 100%
   );
-  padding-top: var(--navbar-height);
+  padding-top: var(--space-lg);
   padding-bottom: var(--space-xl);
 }
 
