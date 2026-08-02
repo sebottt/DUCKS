@@ -15,6 +15,10 @@
   function hide() {
     if (hidden) return;
     hidden = true;
+    
+    
+    
+    document.dispatchEvent(new CustomEvent('ducks:loader-hide'));
     loader.classList.add('page-loader--hidden');
     
     

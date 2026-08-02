@@ -72,11 +72,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     
-    const heroEls = document.querySelectorAll('.site-header, .navbar__brand, .navbar__item, .hero__text > *, .hero__illustration-img');
-    heroEls.forEach((el, i) => {
-      el.style.animationDelay = `${i * 0.08}s`;
-      el.classList.add('anim-hero-in');
-    });
+    function triggerHeroAnimation() {
+      const heroEls = document.querySelectorAll('.site-header, .navbar__brand, .navbar__item, .hero__text > *, .hero__illustration-img');
+      heroEls.forEach((el, i) => {
+        el.style.animationDelay = `${i * 0.08}s`;
+        el.classList.add('anim-hero-in');
+      });
+    }
+
+    
+    
+    
+    
+    
+    if (document.getElementById('page-loader')) {
+      document.addEventListener('ducks:loader-hide', triggerHeroAnimation, { once: true });
+    } else {
+      triggerHeroAnimation();
+    }
 
     if (prefersReduced) return;
 
