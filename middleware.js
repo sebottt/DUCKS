@@ -29,6 +29,11 @@ export const config = {
 // al path "maintenance" (se ve en .vercel/output/config.json -> overrides).
 // Reescribir a "/maintenance.html" apunta a una ruta que NO existe y devuelve
 // 404 en todas las rutas interceptadas. Tiene que ser sin extension.
+// OJO: /maintenance lleva Cache-Control: no-store en vercel.json, y tiene que
+// seguir llevandolo. Sin eso el CDN cachea la respuesta de este rewrite y la
+// sirve para cualquier ruta sin volver a ejecutar este middleware: el enlace
+// ?bypass= deja de funcionar, y al apagar el mantenimiento la gente sigue
+// viendo la pantalla hasta que expire la copia.
 const MAINTENANCE_PATH = '/maintenance';
 
 const BYPASS_COOKIE = 'ducks_bypass';
