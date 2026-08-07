@@ -226,6 +226,23 @@ body {
   font-weight: 600;
 }
 
+.legal-section__content ul {
+  margin: 0 0 10px;
+  padding-left: 22px;
+  list-style: disc;
+}
+
+.legal-section__content li {
+  font-size: 0.95rem;
+  color: var(--color-text-soft);
+  line-height: 1.8;
+  margin-bottom: 4px;
+}
+
+.legal-section__content li::marker {
+  color: var(--color-400);
+}
+
 .legal-also {
   display: flex;
   align-items: center;

@@ -9,7 +9,6 @@ const rateLimit = new Map();
 export default async function handler(req, res) {
   
   
-  return res.status(403).json({ error: 'El sorteo ha finalizado. No se aceptan más participaciones.' });
 
   
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
@@ -55,6 +54,11 @@ export default async function handler(req, res) {
 
   if (cleanUsername.length > 60) {
     return res.status(400).json({ error: 'El nombre de usuario no puede exceder 60 caracteres' });
+  }
+
+  
+  if (/[<>"'&]/.test(cleanUsername)) {
+    return res.status(400).json({ error: 'El nombre de usuario contiene caracteres no permitidos (< > " \' &)' });
   }
 
   let cleanComentario = null;

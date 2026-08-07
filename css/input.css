@@ -7,10 +7,6 @@
 @source "../*.html";
 @source "../js/**/*.js";
 
-@plugin "daisyui" {
-  themes: false; 
-}
-
 @theme static {
   
   --color-brand-50:  #F0F3FA;
@@ -43,36 +39,6 @@
   --shadow-sm: 0 2px 8px rgba(57, 88, 134, 0.08);
   --shadow-md: 0 8px 24px rgba(57, 88, 134, 0.12);
   --shadow-lg: 0 20px 48px rgba(57, 88, 134, 0.16);
-}
-
-@plugin "daisyui/theme" {
-  name: "ducks";
-  default: true;
-  prefersdark: false;
-  color-scheme: light;
-
-  --color-base-100: #ffffff;
-  --color-base-200: #F0F3FA;
-  --color-base-300: #D5DEEF;
-  --color-base-content: #395886;
-
-  --color-primary: #628ECB;
-  --color-primary-content: #ffffff;
-  --color-secondary: #395886;
-  --color-secondary-content: #ffffff;
-  --color-accent: #8AAEE0;
-  --color-accent-content: #395886;
-  --color-neutral: #395886;
-  --color-neutral-content: #F0F3FA;
-
-  --color-info: #628ECB;
-  --color-success: #16a34a;
-  --color-warning: #f59e0b;
-  --color-error: #dc2626;
-
-  --radius-selector: 9999px;
-  --radius-field: 8px;
-  --radius-box: 24px;
 }
 
 @layer base {

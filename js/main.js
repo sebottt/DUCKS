@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   
   (function initScrollSpy() {
-    const sectionIds = ['hero', 'metricas', 'redes-ducks', 'redes-duckes', 'staff'];
+    const sectionIds = ['hero', 'metricas', 'redes-ducks', 'redes-duckes', 'sorteo', 'ganadores', 'staff'];
     const sections   = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     const navLinks   = document.querySelectorAll('.navbar__link');
     if (!sections.length) return;
@@ -179,6 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     const closeModal = () => {
+      
+      if (modal.contains(document.activeElement)) btnOpen.focus();
+
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -220,6 +223,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      
+      
+      if (/[<>"'&]/.test(data.nomb_usua)) {
+        statusDiv.textContent = 'El nickname no puede contener < > " \' &';
+        statusDiv.className = 'form-status error';
+        return;
+      }
+
       btnSubmit.disabled = true;
       btnSubmit.querySelector('.btn__text').textContent = 'Enviando...';
       statusDiv.textContent = '';
@@ -257,42 +268,309 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
   
-  const sorteoSection = document.getElementById('sorteo');
-  if (sorteoSection) {
+  
+  
+  
+  const ganadoresSection = document.getElementById('ganadores');
+  if (ganadoresSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lanzarConfeti = () => {
+      if (typeof confetti !== 'function') return;
+      const duration = 1500; 
+      const end = Date.now() + duration;
+      const colors = ['#fbbf24', '#f59e0b', '#395886', '#638ecb'];
+
+      (function frame() {
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      }());
+    };
+
     const observer = new IntersectionObserver((entries, observerInstance) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          
-          observerInstance.disconnect();
-          
-          if (typeof confetti === 'function') {
-            const duration = 1500; 
-            const end = Date.now() + duration;
+      if (!entries.some((e) => e.isIntersecting)) return;
+      
+      observerInstance.disconnect();
 
-            (function frame() {
-              confetti({
-                particleCount: 5,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#fbbf24', '#f59e0b', '#395886', '#638ecb']
-              });
-              confetti({
-                particleCount: 5,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#fbbf24', '#f59e0b', '#395886', '#638ecb']
-              });
+      const script = document.createElement('script');
+      script.src = './js/vendor/confetti.browser.js';
+      script.onload = lanzarConfeti;
+      document.head.appendChild(script);
+      
+      
+    }, { threshold: 0.1, rootMargin: '300px 0px' });
 
-              if (Date.now() < end) {
-                requestAnimationFrame(frame);
-              }
-            }());
-          }
+    observer.observe(ganadoresSection);
+  }
+
+  
+  (function initCoverflowGanadores() {
+    const escenario = document.querySelector('.ganadores-coverflow');
+    if (!escenario) return;
+
+    const items = Array.from(escenario.querySelectorAll('.coverflow__item'));
+    if (!items.length) return;
+
+    const controles = document.querySelector('.coverflow-controls');
+    const btnPrev = controles && controles.querySelector('.carrusel-nav--prev');
+    const btnNext = controles && controles.querySelector('.carrusel-nav--next');
+
+    
+    
+    
+    const ANGULO = 45;      
+    const ESCALA = 0.11;    
+    const VISIBLES = 2;     
+
+    
+    
+    
+    
+    
+    const originales = items.slice();
+    const MINIMO = VISIBLES * 2 + 3;
+    const lista = escenario.querySelector('.coverflow__list');
+
+    if (lista) {
+      const pasadas = Math.ceil(MINIMO / originales.length);
+      for (let p = 1; p < pasadas; p++) {
+        originales.forEach((orig) => {
+          const copia = orig.cloneNode(true);
+          copia.setAttribute('aria-hidden', 'true');
+          const enlace = copia.querySelector('a');
+          if (enlace) enlace.tabIndex = -1;
+          lista.appendChild(copia);
+          items.push(copia);
+        });
+      }
+    }
+
+    const total = items.length;
+    const TOPE_PASOS = Math.min(4, total - 1);  
+    const PROYECCION = 90;   
+    const MINIMO_ARRASTRE = 0.28;  
+    const ESCALON = 85;      
+
+    
+    let activa = Math.floor((total - 1) / 2);
+    let offsPrevios = null;
+    let pasoX = 0;
+    let pasoZ = 0;
+    let inicioX = null;
+    let ultimoX = 0;
+    let ultimoT = 0;
+    let velocidad = 0;
+    let arrastrado = false;
+
+    
+    
+    function medir() {
+      const ancho = items[0].offsetWidth || 230;
+      pasoX = ancho * 0.52;
+      pasoZ = ancho * 0.62;
+    }
+
+    
+    
+    function desplazamiento(i) {
+      let off = ((i - activa) % total + total) % total;   
+      if (off > total / 2) off -= total;                  
+      return off;
+    }
+
+    
+    
+    
+    
+    
+    function pintar(pasos, escalonar) {
+      
+      
+      escenario.classList.add('is-revealed');
+
+      const offs = new Array(total);
+      let minimo = Infinity;
+      let maximo = -Infinity;
+
+      for (let i = 0; i < total; i++) {
+        const off = desplazamiento(i);
+        offs[i] = off;
+        if (Math.abs(off) <= VISIBLES) {
+          if (off < minimo) minimo = off;
+          if (off > maximo) maximo = off;
+        }
+      }
+
+      
+      
+      const centrado = -((minimo + maximo) / 2) * pasoX;
+
+      
+      
+      
+      const saltan = new Array(total);
+      let haySaltos = false;
+      for (let i = 0; i < total; i++) {
+        saltan[i] = offsPrevios !== null && (offs[i] - offsPrevios[i]) !== -pasos;
+        if (saltan[i]) haySaltos = true;
+      }
+
+      for (let i = 0; i < total; i++) {
+        const item = items[i];
+        const off = offs[i];
+        const dist = Math.abs(off);
+        const fuera = dist > VISIBLES;
+        const giro = off === 0 ? 0 : (off > 0 ? -ANGULO : ANGULO);
+
+        if (saltan[i]) item.style.transition = 'none';
+        if (escalonar) item.style.transitionDelay = (dist * ESCALON) + 'ms';
+
+        item.style.transform =
+          'translateX(' + (off * pasoX + centrado) + 'px) ' +
+          'translateZ(' + (-dist * pasoZ) + 'px) ' +
+          'rotateY(' + giro + 'deg) ' +
+          'scale(' + Math.max(1 - dist * ESCALA, 0.4) + ')';
+
+        item.style.zIndex = String(100 - dist);
+        item.style.opacity = fuera ? '0' : '1';
+        item.style.pointerEvents = fuera ? 'none' : 'auto';
+        item.style.setProperty('--dim', dist === 0 ? '0' : String(Math.min(0.15 + dist * 0.12, 0.5)));
+        item.classList.toggle('is-active', off === 0);
+      }
+
+      if (haySaltos) {
+        void escenario.offsetWidth;  
+        for (let i = 0; i < total; i++) {
+          if (saltan[i]) items[i].style.transition = '';
+        }
+      }
+
+      offsPrevios = offs;
+    }
+
+    
+    
+    
+    function irA(destino) {
+      let pasos = ((destino - activa) % total + total) % total;
+      if (pasos > total / 2) pasos -= total;
+      if (pasos === 0) return;
+      activa = ((activa + pasos) % total + total) % total;
+      pintar(pasos);
+    }
+
+    items.forEach((item, i) => {
+      const enlace = item.querySelector('a');
+      if (!enlace) return;
+
+      
+      
+      enlace.addEventListener('click', (e) => {
+        if (i !== activa || arrastrado) {
+          e.preventDefault();
+          irA(i);
         }
       });
-    }, { threshold: 0.1 }); 
 
-    observer.observe(sorteoSection);
-  }
+      
+      
+      enlace.addEventListener('focus', () => irA(i));
+    });
+
+    escenario.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      irA(activa + (e.key === 'ArrowRight' ? 1 : -1));
+      const enlace = items[activa].querySelector('a');
+      if (enlace) enlace.focus();
+    });
+
+    if (btnPrev) btnPrev.addEventListener('click', () => irA(activa - 1));
+    if (btnNext) btnNext.addEventListener('click', () => irA(activa + 1));
+
+    
+    escenario.addEventListener('pointerdown', (e) => {
+      inicioX = e.clientX;
+      ultimoX = e.clientX;
+      ultimoT = e.timeStamp;
+      velocidad = 0;
+      arrastrado = false;
+    });
+
+    escenario.addEventListener('pointermove', (e) => {
+      if (inicioX === null) return;
+      const dt = e.timeStamp - ultimoT;
+      if (dt > 0) {
+        
+        velocidad = 0.6 * ((e.clientX - ultimoX) / dt) + 0.4 * velocidad;
+        ultimoX = e.clientX;
+        ultimoT = e.timeStamp;
+      }
+      if (Math.abs(e.clientX - inicioX) > 10) arrastrado = true;
+    }, { passive: true });
+
+    
+    
+    window.addEventListener('pointerup', (e) => {
+      if (inicioX === null) return;
+      const dx = e.clientX - inicioX;
+      
+      if (e.timeStamp - ultimoT > 120) velocidad = 0;
+      inicioX = null;
+
+      const recorrido = dx + velocidad * PROYECCION;
+      let pasos = Math.round(-recorrido / pasoX);
+      if (pasos === 0 && Math.abs(dx) > pasoX * MINIMO_ARRASTRE) pasos = dx < 0 ? 1 : -1;
+      pasos = Math.max(-TOPE_PASOS, Math.min(TOPE_PASOS, pasos));
+      if (pasos !== 0) irA(activa + pasos);
+
+      
+      
+      setTimeout(() => { arrastrado = false; }, 0);
+    }, { passive: true });
+
+    window.addEventListener('pointercancel', () => {
+      inicioX = null;
+      arrastrado = false;
+    }, { passive: true });
+
+    
+    if (controles && originales.length < 2) controles.classList.add('is-hidden');
+
+    
+    
+    let repintadoPendiente = false;
+    window.addEventListener('resize', () => {
+      if (repintadoPendiente) return;
+      repintadoPendiente = true;
+      requestAnimationFrame(() => {
+        repintadoPendiente = false;
+        medir();
+        
+        
+        if (escenario.classList.contains('is-revealed')) pintar(0);
+      });
+    }, { passive: true });
+
+    
+    function repartir() {
+      pintar(0, true);
+      
+      
+      setTimeout(() => {
+        for (const item of items) item.style.transitionDelay = '';
+      }, ESCALON * VISIBLES + 700);
+    }
+
+    medir();
+
+    if ('IntersectionObserver' in window) {
+      const entrada = new IntersectionObserver((entries, obs) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        obs.disconnect();
+        repartir();
+      }, { threshold: 0.15 });
+      entrada.observe(escenario);
+    } else {
+      repartir();
+    }
+  })();
