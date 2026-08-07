@@ -1,9 +1,15 @@
 /* =============================================
-   DUCKS ES — fuente de Tailwind v4 + daisyUI
+   DUCKS ES — fuente de Tailwind v4
    ---------------------------------------------
    Este es el archivo que se EDITA. El CSS que sirve
    el sitio se genera con:  npm run build:css
    (no editar css/app.css a mano: se sobreescribe)
+
+   daisyUI se retiro el 2026-08-07: no habia ni una sola
+   clase suya en el marcado (las .btn/.navbar/.modal
+   propias se renombraron a .d-* justamente por chocar
+   con las suyas, y maintenance.html lleva su CSS inline).
+   Aportaba 37 KB sin comprimir de los 76 del bundle.
 ============================================= */
 
 @import "tailwindcss";
@@ -19,10 +25,6 @@
 /* Archivos donde Tailwind busca clases usadas */
 @source "../*.html";
 @source "../js/**/*.js";
-
-@plugin "daisyui" {
-  themes: false; /* usamos solo el tema propio de abajo */
-}
 
 /* =============================================
    TOKENS — los mismos valores que tenia styles.css
@@ -63,38 +65,6 @@
   --shadow-sm: 0 2px 8px rgba(57, 88, 134, 0.08);
   --shadow-md: 0 8px 24px rgba(57, 88, 134, 0.12);
   --shadow-lg: 0 20px 48px rgba(57, 88, 134, 0.16);
-}
-
-/* Tema de daisyUI con la paleta de Ducks, para que sus
-   componentes (modal, btn...) salgan ya con tus colores */
-@plugin "daisyui/theme" {
-  name: "ducks";
-  default: true;
-  prefersdark: false;
-  color-scheme: light;
-
-  --color-base-100: #ffffff;
-  --color-base-200: #F0F3FA;
-  --color-base-300: #D5DEEF;
-  --color-base-content: #395886;
-
-  --color-primary: #628ECB;
-  --color-primary-content: #ffffff;
-  --color-secondary: #395886;
-  --color-secondary-content: #ffffff;
-  --color-accent: #8AAEE0;
-  --color-accent-content: #395886;
-  --color-neutral: #395886;
-  --color-neutral-content: #F0F3FA;
-
-  --color-info: #628ECB;
-  --color-success: #16a34a;
-  --color-warning: #f59e0b;
-  --color-error: #dc2626;
-
-  --radius-selector: 9999px;
-  --radius-field: 8px;
-  --radius-box: 24px;
 }
 
 /* =============================================

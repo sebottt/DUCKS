@@ -57,6 +57,33 @@
     }
   }
 
+  /* El refresco solo corre cuando la pestana esta a la vista. Antes
+     seguia consultando cada 20s en pestanas olvidadas en segundo plano:
+     gastaba bateria y datos del visitante, y disparaba invocaciones de
+     funcion en Vercel sin que nadie estuviera mirando el contador. */
+  const REFRESCO = 20000;
+  let temporizador = null;
+
+  function arrancar() {
+    if (temporizador !== null) return;
+    temporizador = setInterval(loadVisits, REFRESCO);
+  }
+
+  function parar() {
+    if (temporizador === null) return;
+    clearInterval(temporizador);
+    temporizador = null;
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      parar();
+    } else {
+      loadVisits();  // al volver, refresca ya en vez de esperar 20s
+      arrancar();
+    }
+  });
+
   loadVisits();
-  setInterval(loadVisits, 20000);
+  if (!document.hidden) arrancar();
 })();

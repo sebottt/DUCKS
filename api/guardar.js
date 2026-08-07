@@ -9,9 +9,10 @@ const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 const rateLimit = new Map();
 
 export default async function handler(req, res) {
-  // 🔒 BLOQUEO DE SEGURIDAD TEMPORAL: El sorteo ha finalizado
-  // Esto evita que bots o hackers envíen datos directamente a la API
-  return res.status(403).json({ error: 'El sorteo ha finalizado. No se aceptan más participaciones.' });
+  /* Cuando el sorteo termine, volver a cerrar el endpoint descomentando
+     esta linea. Sin ella cualquiera puede seguir enviando participaciones
+     por POST directo aunque se quite el boton del frontend. */
+  // return res.status(403).json({ error: 'El sorteo ha finalizado. No se aceptan más participaciones.' });
 
   // Rate limiting básico basado en IP
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
@@ -57,6 +58,17 @@ export default async function handler(req, res) {
 
   if (cleanUsername.length > 60) {
     return res.status(400).json({ error: 'El nombre de usuario no puede exceder 60 caracteres' });
+  }
+
+  /* El nick del ganador se copia a mano al HTML de la seccion de Ganadores,
+     donde no hay ningun escapado automatico que lo neutralice. Esta es la
+     unica barrera real contra que alguien se registre como
+     `@<img src=x onerror=...>` y ese marcado acabe pegado en la pagina.
+     Solo se aplica al nick (que se publica), no al comentario, que es texto
+     libre y nunca sale de la base de datos.
+     La misma regla vive en el `pattern` del input, en index.html. */
+  if (/[<>"'&]/.test(cleanUsername)) {
+    return res.status(400).json({ error: 'El nombre de usuario contiene caracteres no permitidos (< > " \' &)' });
   }
 
   let cleanComentario = null;

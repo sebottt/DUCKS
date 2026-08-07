@@ -761,75 +761,219 @@
   border-radius: var(--radius-sm);
 }
 
-/* Ganadores de sorteo */
-.ganadores-list {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  width: 100%;
-  max-width: 480px;
+.sorteo-deadline strong {
+  color: var(--color-primary);
 }
 
-.ganador-profile {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  text-decoration: none;
+
+/* =============================================
+   10c. SECCIÓN: GANADORES — COVERFLOW 3D
+   Las tarjetas se apilan en perspectiva: la central
+   de frente y las laterales giradas y hundidas hacia
+   atras, para que se vean varias a la vez.
+   Las transformaciones exactas las calcula main.js
+   (initCoverflowGanadores) porque dependen del indice
+   activo; aqui solo va el escenario 3D y la tarjeta.
+============================================= */
+.section--ganadores {
   background: var(--bg-card);
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  min-height: auto;
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
 }
 
-.ganador-profile:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
-  border-color: #f59e0b;
-}
-
-.ganador-profile__avatar {
-  width: 110px;
-  height: 110px;
-  background: var(--bg-body);
-  border: 3px dashed var(--color-border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.ganadores-coverflow {
+  position: relative;
+  height: 380px;
+  margin-top: var(--space-md);
+  /* La perspectiva se aplica a los hijos; .coverflow__list la
+     propaga a las tarjetas con preserve-3d. */
+  perspective: 1200px;
   overflow: hidden;
-  flex-shrink: 0;
+  /* Deja el scroll vertical al navegador; el horizontal lo
+     interpretamos nosotros como cambio de tarjeta. */
+  touch-action: pan-y;
+  /* Halo suave detras de la tarjeta central, para dar fondo
+     a la profundidad sin recurrir a un degradado de pantalla. */
+  background: radial-gradient(ellipse 55% 70% at 50% 55%, var(--color-50) 0%, transparent 70%);
 }
 
-.ganador-profile__avatar img {
+.coverflow__list {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+}
+
+/* Estado de partida del reparto: las tarjetas nacen apiladas en el
+   centro, hundidas y un poco mas abajo. main.js les quita este estado
+   (clase .is-revealed en el escenario) y las abre en abanico cuando la
+   seccion entra en pantalla. Esta en CSS y no en JS para que no haya
+   un fotograma con las 8 tarjetas amontonadas antes de que corra main.js. */
+.ganadores-coverflow:not(.is-revealed) .coverflow__item {
+  opacity: 0;
+  transform: translateY(40px) translateZ(-420px) scale(0.92);
+}
+
+.coverflow__item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 230px;
+  height: 300px;
+  margin: -150px 0 0 -115px;
+  transition: transform 0.55s cubic-bezier(0.22, 0.9, 0.3, 1), opacity 0.4s ease;
+  /* Sin will-change a proposito: el translateZ del transform ya promueve
+     la tarjeta a su propia capa, y declararlo ademas mantiene las 8
+     capas retenidas en memoria de GPU todo el rato sin ganar nada. */
+}
+
+.ganador-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  text-decoration: none;
+  background: var(--bg-body);
+  box-shadow: 0 20px 44px rgba(57, 88, 134, 0.3);
+}
+
+/* Velo que apaga las tarjetas laterales. La opacidad la fija
+   main.js en --dim segun lo lejos que este la tarjeta.
+   Tira al color del fondo, no a oscuro: sobre una seccion clara
+   lo que lee como lejania es desvanecerse hacia el fondo. */
+.ganador-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--bg-card);
+  opacity: var(--dim, 0);
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+
+.coverflow__item.is-active .ganador-card {
+  box-shadow: 0 28px 60px rgba(57, 88, 134, 0.38);
+}
+
+.ganador-card__foto {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.ganador-profile__info {
+.ganador-card__info {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 3px;
+  padding: 44px 16px 16px;
+  text-align: center;
+  background: linear-gradient(to top, rgba(16, 27, 48, 0.94) 32%, rgba(16, 27, 48, 0));
 }
 
-.ganador-profile__name {
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--color-600);
+.ganador-card__name {
   font-family: var(--font-display);
-  letter-spacing: -0.01em;
-}
-
-.ganador-profile__prize {
   font-size: 1.15rem;
-  color: #f59e0b;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+  /* Los nicks pueden ser largos y sin espacios */
+  overflow-wrap: anywhere;
 }
 
-.sorteo-deadline strong {
-  color: var(--color-primary);
+.ganador-card__meta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fbbf24;
+  font-variant-numeric: tabular-nums;
+}
+
+.ganador-card:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+/* Controles debajo del escenario: encima de las tarjetas
+   quedarian tapando las laterales. */
+.coverflow-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: var(--space-md);
+}
+
+.carrusel-nav {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  background: var(--bg-card);
+  color: var(--color-600);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+}
+
+.carrusel-nav:hover:not(:disabled) {
+  background: var(--color-600);
+  color: #fff;
+}
+
+.carrusel-nav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* Con una sola tarjeta no hay nada que recorrer */
+.coverflow-controls.is-hidden {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .ganadores-coverflow {
+    height: 340px;
+  }
+
+  .coverflow__item {
+    width: 200px;
+    height: 264px;
+    margin: -132px 0 0 -100px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ganadores-coverflow {
+    height: 300px;
+  }
+
+  .coverflow__item {
+    width: 170px;
+    height: 224px;
+    margin: -112px 0 0 -85px;
+  }
+
+  .ganador-card__name {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coverflow__item {
+    transition: none;
+  }
 }
 
 

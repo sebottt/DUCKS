@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
      3. SCROLL SPY — Sección activa en navbar
   ============================================= */
   (function initScrollSpy() {
-    const sectionIds = ['hero', 'metricas', 'redes-ducks', 'redes-duckes', 'staff'];
+    const sectionIds = ['hero', 'metricas', 'redes-ducks', 'redes-duckes', 'sorteo', 'ganadores', 'staff'];
     const sections   = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
     const navLinks   = document.querySelectorAll('.navbar__link');
     if (!sections.length) return;
@@ -203,6 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cerrar Modal
     const closeModal = () => {
+      /* Devolver el foco al boton que abrio el modal ANTES de ocultarlo.
+         Marcar aria-hidden en un contenedor que todavia tiene el foco
+         dentro deja a quien usa lector de pantalla apuntando a un
+         elemento que para el ya no existe; Chrome lo bloquea y avisa
+         por consola. Ademas es el comportamiento correcto: al cerrar,
+         el foco vuelve a donde estaba, no al principio de la pagina. */
+      if (modal.contains(document.activeElement)) btnOpen.focus();
+
       modal.classList.remove('is-open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -244,6 +252,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Mismo filtro que aplica api/guardar.js, aqui solo para dar el aviso
+      // en español sin esperar al viaje de ida y vuelta al servidor.
+      if (/[<>"'&]/.test(data.nomb_usua)) {
+        statusDiv.textContent = 'El nickname no puede contener < > " \' &';
+        statusDiv.className = 'form-status error';
+        return;
+      }
+
       btnSubmit.disabled = true;
       btnSubmit.querySelector('.btn__text').textContent = 'Enviando...';
       statusDiv.textContent = '';
@@ -279,44 +295,324 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // ==========================================
-  // CONFETI EN SECCIÓN DE GANADORES (OPTIMIZADO)
+  // CONFETI EN SECCIÓN DE GANADORES
+  // La libreria (17 KB) se descarga bajo demanda cuando la seccion
+  // se acerca, no en la carga inicial: la mayoria de visitas no
+  // llegan hasta aqui y no tienen por que pagar ese peso.
   // ==========================================
-  const sorteoSection = document.getElementById('sorteo');
-  if (sorteoSection) {
+  const ganadoresSection = document.getElementById('ganadores');
+  if (ganadoresSection && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const lanzarConfeti = () => {
+      if (typeof confetti !== 'function') return;
+      const duration = 1500; // Confeti corto y optimizado
+      const end = Date.now() + duration;
+      const colors = ['#fbbf24', '#f59e0b', '#395886', '#638ecb'];
+
+      (function frame() {
+        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors });
+        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors });
+        if (Date.now() < end) requestAnimationFrame(frame);
+      }());
+    };
+
     const observer = new IntersectionObserver((entries, observerInstance) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // Desconectar inmediatamente para ahorrar recursos
-          observerInstance.disconnect();
-          
-          if (typeof confetti === 'function') {
-            const duration = 1500; // Confeti corto y optimizado
-            const end = Date.now() + duration;
+      if (!entries.some((e) => e.isIntersecting)) return;
+      // Desconectar inmediatamente para ahorrar recursos
+      observerInstance.disconnect();
 
-            (function frame() {
-              confetti({
-                particleCount: 5,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#fbbf24', '#f59e0b', '#395886', '#638ecb']
-              });
-              confetti({
-                particleCount: 5,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#fbbf24', '#f59e0b', '#395886', '#638ecb']
-              });
+      const script = document.createElement('script');
+      script.src = './js/vendor/confetti.browser.js';
+      script.onload = lanzarConfeti;
+      document.head.appendChild(script);
+      // rootMargin adelanta la descarga para que la libreria este lista
+      // justo cuando la seccion entra de verdad en pantalla.
+    }, { threshold: 0.1, rootMargin: '300px 0px' });
 
-              if (Date.now() < end) {
-                requestAnimationFrame(frame);
-              }
-            }());
-          }
+    observer.observe(ganadoresSection);
+  }
+
+  /* =============================================
+     8. COVERFLOW DE GANADORES
+     Coloca cada tarjeta en 3D segun su distancia a la
+     que esta centrada: giro, retroceso, escala y velo.
+     Los pasos se derivan del ancho real de la tarjeta,
+     asi el mismo calculo sirve en movil sin duplicar
+     numeros aqui y en el CSS.
+  ============================================= */
+  (function initCoverflowGanadores() {
+    const escenario = document.querySelector('.ganadores-coverflow');
+    if (!escenario) return;
+
+    const items = Array.from(escenario.querySelectorAll('.coverflow__item'));
+    if (!items.length) return;
+
+    const controles = document.querySelector('.coverflow-controls');
+    const btnPrev = controles && controles.querySelector('.carrusel-nav--prev');
+    const btnNext = controles && controles.querySelector('.carrusel-nav--next');
+
+    // El giro es FIJO por lado, no proporcional a la distancia: si se
+    // multiplica, a partir del segundo nivel se pasa de 90 grados y la
+    // tarjeta se da la vuelta — se ve el reverso y vuelve a ensancharse.
+    const ANGULO = 45;      // grados de giro de las tarjetas laterales
+    const ESCALA = 0.11;    // cuanto encoge cada nivel
+    const VISIBLES = 2;     // niveles dibujados a cada lado
+
+    // El anillo necesita mas tarjetas de las que se ven: dos huecos
+    // ocultos a los lados para que el salto de la vuelta ocurra fuera
+    // de la vista. Con pocos ganadores no hay suficientes, asi que se
+    // repiten en pasadas completas — los clones son decorativos y
+    // quedan fuera del lector de pantalla y de la tabulacion.
+    const originales = items.slice();
+    const MINIMO = VISIBLES * 2 + 3;
+    const lista = escenario.querySelector('.coverflow__list');
+
+    if (lista) {
+      const pasadas = Math.ceil(MINIMO / originales.length);
+      for (let p = 1; p < pasadas; p++) {
+        originales.forEach((orig) => {
+          const copia = orig.cloneNode(true);
+          copia.setAttribute('aria-hidden', 'true');
+          const enlace = copia.querySelector('a');
+          if (enlace) enlace.tabIndex = -1;
+          lista.appendChild(copia);
+          items.push(copia);
+        });
+      }
+    }
+
+    const total = items.length;
+    const TOPE_PASOS = Math.min(4, total - 1);  // techo de un deslizamiento rapido
+    const PROYECCION = 90;   // ms de inercia que se proyectan al soltar
+    const MINIMO_ARRASTRE = 0.28;  // fraccion de tarjeta para que cuente un arrastre lento
+    const ESCALON = 85;      // ms de retraso por nivel en la entrada
+
+    // Empieza por la de en medio para que el abanico salga simetrico
+    let activa = Math.floor((total - 1) / 2);
+    let offsPrevios = null;
+    let pasoX = 0;
+    let pasoZ = 0;
+    let inicioX = null;
+    let ultimoX = 0;
+    let ultimoT = 0;
+    let velocidad = 0;
+    let arrastrado = false;
+
+    // Medir provoca layout, asi que se hace solo al arrancar y al
+    // redimensionar, no en cada repintado.
+    function medir() {
+      const ancho = items[0].offsetWidth || 230;
+      pasoX = ancho * 0.52;
+      pasoZ = ancho * 0.62;
+    }
+
+    // Distancia circular: la tarjeta que queda mas atras por un lado
+    // reaparece por el otro, de ahi que el recorrido no tenga extremos.
+    function desplazamiento(i) {
+      let off = ((i - activa) % total + total) % total;   // 0 .. total-1
+      if (off > total / 2) off -= total;                  // -total/2 .. total/2
+      return off;
+    }
+
+    // `pasos` es cuantas posiciones se acaba de mover (0 al arrancar o
+    // al redimensionar). Sirve para saber que tarjeta dio la vuelta: su
+    // desplazamiento cambia en algo distinto de -pasos.
+    // `escalonar` solo se usa en la entrada: reparte las tarjetas desde
+    // el centro hacia fuera en vez de plantarlas todas a la vez.
+    function pintar(pasos, escalonar) {
+      // Pintar implica colocar las tarjetas, asi que el estado de partida
+      // del CSS ya no aplica. Idempotente: puede llamarse siempre.
+      escenario.classList.add('is-revealed');
+
+      const offs = new Array(total);
+      let minimo = Infinity;
+      let maximo = -Infinity;
+
+      for (let i = 0; i < total; i++) {
+        const off = desplazamiento(i);
+        offs[i] = off;
+        if (Math.abs(off) <= VISIBLES) {
+          if (off < minimo) minimo = off;
+          if (off > maximo) maximo = off;
+        }
+      }
+
+      // Centra el abanico realmente dibujado. Con pocas tarjetas no hay
+      // suficientes para llenar ambos lados y sin esto queda descuadrado.
+      const centrado = -((minimo + maximo) / 2) * pasoX;
+
+      // Al dar la vuelta, una tarjeta salta de un extremo al otro. Si eso
+      // se anima, cruza la pantalla por delante de todas; hay que moverla
+      // sin transicion y devolversela despues del reflow.
+      const saltan = new Array(total);
+      let haySaltos = false;
+      for (let i = 0; i < total; i++) {
+        saltan[i] = offsPrevios !== null && (offs[i] - offsPrevios[i]) !== -pasos;
+        if (saltan[i]) haySaltos = true;
+      }
+
+      for (let i = 0; i < total; i++) {
+        const item = items[i];
+        const off = offs[i];
+        const dist = Math.abs(off);
+        const fuera = dist > VISIBLES;
+        const giro = off === 0 ? 0 : (off > 0 ? -ANGULO : ANGULO);
+
+        if (saltan[i]) item.style.transition = 'none';
+        if (escalonar) item.style.transitionDelay = (dist * ESCALON) + 'ms';
+
+        item.style.transform =
+          'translateX(' + (off * pasoX + centrado) + 'px) ' +
+          'translateZ(' + (-dist * pasoZ) + 'px) ' +
+          'rotateY(' + giro + 'deg) ' +
+          'scale(' + Math.max(1 - dist * ESCALA, 0.4) + ')';
+
+        item.style.zIndex = String(100 - dist);
+        item.style.opacity = fuera ? '0' : '1';
+        item.style.pointerEvents = fuera ? 'none' : 'auto';
+        item.style.setProperty('--dim', dist === 0 ? '0' : String(Math.min(0.15 + dist * 0.12, 0.5)));
+        item.classList.toggle('is-active', off === 0);
+      }
+
+      if (haySaltos) {
+        void escenario.offsetWidth;  // fuerza el reflow antes de restaurar
+        for (let i = 0; i < total; i++) {
+          if (saltan[i]) items[i].style.transition = '';
+        }
+      }
+
+      offsPrevios = offs;
+    }
+
+    // El indice da la vuelta en los dos sentidos: no hay principio ni final.
+    // El movimiento se reduce al camino mas corto del anillo: ir 6 atras y
+    // 2 adelante acaban igual, pero solo uno de los dos se ve natural.
+    function irA(destino) {
+      let pasos = ((destino - activa) % total + total) % total;
+      if (pasos > total / 2) pasos -= total;
+      if (pasos === 0) return;
+      activa = ((activa + pasos) % total + total) % total;
+      pintar(pasos);
+    }
+
+    items.forEach((item, i) => {
+      const enlace = item.querySelector('a');
+      if (!enlace) return;
+
+      // Pulsar una tarjeta lateral la trae al centro en vez de
+      // abrir el perfil; solo la centrada navega.
+      enlace.addEventListener('click', (e) => {
+        if (i !== activa || arrastrado) {
+          e.preventDefault();
+          irA(i);
         }
       });
-    }, { threshold: 0.1 }); // ¡0.1 arregla el bug! Funciona incluso si la sección es más alta que la pantalla del celular
 
-    observer.observe(sorteoSection);
-  }
+      // Tabular por las tarjetas tambien mueve el coverflow,
+      // para que el foco nunca quede en una tarjeta invisible.
+      enlace.addEventListener('focus', () => irA(i));
+    });
+
+    escenario.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      irA(activa + (e.key === 'ArrowRight' ? 1 : -1));
+      const enlace = items[activa].querySelector('a');
+      if (enlace) enlace.focus();
+    });
+
+    if (btnPrev) btnPrev.addEventListener('click', () => irA(activa - 1));
+    if (btnNext) btnNext.addEventListener('click', () => irA(activa + 1));
+
+    /* Deslizar con el dedo o arrastrar con el raton.
+       Cuantas tarjetas avanza depende del recorrido Y de la velocidad:
+       un tiron rapido salta varias, un arrastre lento solo una. Se
+       calcula proyectando la velocidad final unos milisegundos, que es
+       como se comporta el desplazamiento por inercia del sistema. */
+    escenario.addEventListener('pointerdown', (e) => {
+      inicioX = e.clientX;
+      ultimoX = e.clientX;
+      ultimoT = e.timeStamp;
+      velocidad = 0;
+      arrastrado = false;
+    });
+
+    escenario.addEventListener('pointermove', (e) => {
+      if (inicioX === null) return;
+      const dt = e.timeStamp - ultimoT;
+      if (dt > 0) {
+        // Media exponencial: el tiron final pesa mas que el arrastre previo
+        velocidad = 0.6 * ((e.clientX - ultimoX) / dt) + 0.4 * velocidad;
+        ultimoX = e.clientX;
+        ultimoT = e.timeStamp;
+      }
+      if (Math.abs(e.clientX - inicioX) > 10) arrastrado = true;
+    }, { passive: true });
+
+    // En window y no en el escenario: si se suelta el dedo fuera de la
+    // seccion, el evento no llegaria y el arrastre quedaria a medias.
+    window.addEventListener('pointerup', (e) => {
+      if (inicioX === null) return;
+      const dx = e.clientX - inicioX;
+      // Si el dedo se paro antes de levantarse, no hay inercia que proyectar
+      if (e.timeStamp - ultimoT > 120) velocidad = 0;
+      inicioX = null;
+
+      const recorrido = dx + velocidad * PROYECCION;
+      let pasos = Math.round(-recorrido / pasoX);
+      if (pasos === 0 && Math.abs(dx) > pasoX * MINIMO_ARRASTRE) pasos = dx < 0 ? 1 : -1;
+      pasos = Math.max(-TOPE_PASOS, Math.min(TOPE_PASOS, pasos));
+      if (pasos !== 0) irA(activa + pasos);
+
+      // El click se dispara justo despues; dale un tick para que
+      // lea `arrastrado` antes de limpiarlo.
+      setTimeout(() => { arrastrado = false; }, 0);
+    }, { passive: true });
+
+    window.addEventListener('pointercancel', () => {
+      inicioX = null;
+      arrastrado = false;
+    }, { passive: true });
+
+    // Con un unico ganador no hay nada que recorrer (items ya incluye clones)
+    if (controles && originales.length < 2) controles.classList.add('is-hidden');
+
+    // El resize dispara en rafagas; agrupar en un frame evita medir y
+    // repintar decenas de veces mientras se arrastra la ventana.
+    let repintadoPendiente = false;
+    window.addEventListener('resize', () => {
+      if (repintadoPendiente) return;
+      repintadoPendiente = true;
+      requestAnimationFrame(() => {
+        repintadoPendiente = false;
+        medir();
+        // Antes del reparto no se pinta: eso borraria el estado de
+        // partida y las tarjetas apareceran ya colocadas.
+        if (escenario.classList.contains('is-revealed')) pintar(0);
+      });
+    }, { passive: true });
+
+    /* Entrada: las tarjetas parten apiladas y hundidas (estado que pone
+       el CSS) y se abren en abanico desde el centro hacia fuera cuando
+       la seccion entra en pantalla. Solo ocurre una vez. */
+    function repartir() {
+      pintar(0, true);
+      // Los retrasos solo valen para la entrada: si se quedaran puestos,
+      // cada movimiento posterior del carrusel arrastraria ese escalon.
+      setTimeout(() => {
+        for (const item of items) item.style.transitionDelay = '';
+      }, ESCALON * VISIBLES + 700);
+    }
+
+    medir();
+
+    if ('IntersectionObserver' in window) {
+      const entrada = new IntersectionObserver((entries, obs) => {
+        if (!entries.some((e) => e.isIntersecting)) return;
+        obs.disconnect();
+        repartir();
+      }, { threshold: 0.15 });
+      entrada.observe(escenario);
+    } else {
+      repartir();
+    }
+  })();
