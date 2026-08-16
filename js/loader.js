@@ -8,7 +8,8 @@
   
   
   
-  var MIN_DISPLAY_MS = 1800;
+  
+  var MIN_DISPLAY_MS = 500;
   var startTime = Date.now();
   var hidden = false;
 
@@ -38,12 +39,15 @@
     }
   }
 
-  if (document.readyState === 'complete') {
-    
+  
+  
+  
+  
+  if (document.readyState !== 'loading') {
     
     hideAfterMinimum();
   } else {
-    window.addEventListener('load', hideAfterMinimum);
+    document.addEventListener('DOMContentLoaded', hideAfterMinimum);
     
     
     setTimeout(hide, 8000);
