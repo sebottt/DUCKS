@@ -8,7 +8,7 @@ const rateLimit = new Map();
 
 export default async function handler(req, res) {
   
-  
+  return res.status(403).json({ error: 'El sorteo ha finalizado. No se aceptan más participaciones.' });
 
   
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown';
